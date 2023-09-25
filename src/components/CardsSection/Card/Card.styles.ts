@@ -12,11 +12,18 @@ export const Card = styled.div<styledCardProps>`
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-sizing: border-box;
+  &:hover {
+    opacity: 0.9;
+  }
   & span {
     position: absolute;
     top: 30px;
     left: 30px;
     font-size: 36px;
     font-weight: 700;
+    color: #000;
   }
 `

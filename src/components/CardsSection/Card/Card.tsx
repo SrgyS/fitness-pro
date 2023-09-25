@@ -1,16 +1,20 @@
 import React from 'react'
 import * as S from './Card.styles'
+import { Link } from 'react-router-dom'
 
 interface CardProps {
-  text: string
-  imgUrl: string
+  text?: string
+  imgUrl?: string
+  courseName?: string
 }
 
-const Card = ({ text, imgUrl }: CardProps) => {
+const Card = ({ text, imgUrl, courseName }: CardProps) => {
   return (
-    <S.Card imgUrl={imgUrl}>
-      <span>{text}</span>
-    </S.Card>
+    <Link to={`/${courseName}`}>
+      <S.Card imgUrl={imgUrl}>
+        <span>{text}</span>
+      </S.Card>
+    </Link>
   )
 }
 
