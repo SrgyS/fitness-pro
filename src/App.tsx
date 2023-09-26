@@ -1,6 +1,7 @@
 import React from 'react'
-import { GlobalStyle } from './global.styles'
+
 import AppRoutes from './components/routing/AppRoutes/AppRoutes'
+import { GlobalStyle } from './global.styles'
 
 function App() {
   return (

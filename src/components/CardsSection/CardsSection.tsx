@@ -2,7 +2,7 @@ import React from 'react'
 import * as S from './CardsSection.styles'
 import { BigButtonMain } from '../Buttons/MainButtons/Button.styles'
 import Card from './Card/Card'
-import { useId } from 'react'
+import { course } from '../../pages/CourseDescriptionPage/CourseDescriptionPage'
 
 const cardData = [
   { text: 'Йога', imgUrl: 'prof-card-5.png', courseName: 'yoga' },
@@ -10,7 +10,7 @@ const cardData = [
   {
     text: 'Танцевальный фитнесс',
     imgUrl: 'prof-card-4.png',
-    courseName: 'dance-fitness',
+    id: 'dance-fitness',
   },
   {
     text: 'Степ-аэробика',
@@ -21,16 +21,15 @@ const cardData = [
 ]
 
 const CardsSection = () => {
-  const cardId = useId()
   return (
     <S.CardsSection>
       <S.CardsWrapper>
         {cardData.map(card => (
           <Card
-            key={cardId}
-            text={card.text}
+            key={course.id}
+            text={course.name}
             imgUrl={require(`../../../src/assets/img/${card.imgUrl}`)}
-            courseName={card.courseName}
+            id={course.id}
           />
         ))}
       </S.CardsWrapper>

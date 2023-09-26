@@ -8,13 +8,13 @@ type Props = {}
 
 const Main = (props: Props) => {
   return (
-    <StyledMain>
-      <div className="container">
+    <>
+      <StyledMain>
         <Header />
         <PromoSection />
         <CardsSection />
-      </div>
-    </StyledMain>
+      </StyledMain>
+    </>
   )
 }
 
