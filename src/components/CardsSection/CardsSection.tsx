@@ -4,6 +4,10 @@ import { BigButtonMain } from '../Buttons/MainButtons/Button.styles'
 import Card from './Card/Card'
 import { course } from '../../pages/CourseDescriptionPage/CourseDescriptionPage'
 
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
 const cardData = [
   { text: 'Йога', imgUrl: 'prof-card-5.png', courseName: 'yoga' },
   { text: 'Стретчинг', imgUrl: 'prof-card-3.png', courseName: 'stretching' },
@@ -33,7 +37,7 @@ const CardsSection = () => {
           />
         ))}
       </S.CardsWrapper>
-      <BigButtonMain>Наверх &uarr;</BigButtonMain>
+      <BigButtonMain onClick={scrollToTop}>Наверх &uarr;</BigButtonMain>
     </S.CardsSection>
   )
 }
