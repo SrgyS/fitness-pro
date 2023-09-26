@@ -11,7 +11,7 @@ interface CardProps {
 const Card = ({ text, imgUrl, id }: CardProps) => {
   return (
     <Link to={`/about/${id}`}>
-      <S.Card imgUrl={imgUrl}>
+      <S.Card $imgUrl={imgUrl}>
         <span>{text}</span>
       </S.Card>
     </Link>

@@ -24,9 +24,9 @@ const CardsSection = () => {
   return (
     <S.CardsSection>
       <S.CardsWrapper>
-        {cardData.map(card => (
+        {cardData.map((card, index) => (
           <Card
-            key={course.id}
+            key={index}
             text={course.name}
             imgUrl={require(`../../../src/assets/img/${card.imgUrl}`)}
             id={course.id}

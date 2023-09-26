@@ -25,6 +25,10 @@ export const PromoTitle = styled.h1`
   line-height: 55px;
   letter-spacing: -1.169px;
   margin: 0;
+
+  @media (max-width: 1161px) {
+    max-width: 450px;
+  }
 `
 
 export const PromoSticker = styled.div`
@@ -54,5 +58,9 @@ export const PromoSticker = styled.div`
     line-height: 18px;
     letter-spacing: -0.15px;
     width: 149px;
+  }
+
+  @media (max-width: 1161px) {
+    right: 0;
   }
 `

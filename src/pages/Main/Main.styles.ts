@@ -4,5 +4,10 @@ export const StyledMain = styled.div`
   padding-left: calc(50% - 580px);
   padding-right: calc(50% - 580px);
   background: #271a58;
-  height: 100vh;
+  min-height: 100vh;
+
+  @media (max-width: 1161px) {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
 `

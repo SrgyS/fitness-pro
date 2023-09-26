@@ -7,7 +7,7 @@ interface LogoProps {
 
 const Logo: React.FC<LogoProps> = ({ textColor }) => {
   return (
-    <S.StyledLogo textColor={textColor}>
+    <S.StyledLogo $textColor={textColor}>
       <img src={logoUrl} alt="Logo" />
       <span>SkyFitnessPro</span>
     </S.StyledLogo>

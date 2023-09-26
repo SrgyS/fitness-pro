@@ -30,12 +30,13 @@ body,
   font-size: 24px;
   font-weight: 400;
   height: 100%;
+  @media (max-width: 426px) {
+    body {
+      font-size: 20px;
+    }
  }
  * {
   box-sizing: border-box;
 }
  }
-
-
-
 `

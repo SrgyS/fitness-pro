@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 interface styledCardProps {
-  imgUrl?: string
+  $imgUrl?: string
 }
 
 export const Card = styled.div<styledCardProps>`
@@ -8,7 +8,7 @@ export const Card = styled.div<styledCardProps>`
   height: 480px;
   overflow: hidden;
   border-radius: 30px;
-  background-image: url(${props => props.imgUrl});
+  background-image: url(${props => props.$imgUrl});
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;

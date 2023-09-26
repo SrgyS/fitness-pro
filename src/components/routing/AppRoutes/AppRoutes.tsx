@@ -7,6 +7,7 @@ import Lesson from '../../../pages/Lesson/Lesson'
 import Main from '../../../pages/Main/Main'
 import NotFound from '../../../pages/NotFound/NotFound'
 import CourseDescription from '../../../pages/CourseDescriptionPage/CourseDescriptionPage'
+import SelectWorkout from '../../SelectWorkout/SelectWorkout'
 
 function AppRoutes() {
   return (
