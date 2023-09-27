@@ -7,7 +7,8 @@ import Lesson from '../../../pages/Lesson/Lesson'
 import Main from '../../../pages/Main/Main'
 import NotFound from '../../../pages/NotFound/NotFound'
 import CourseDescription from '../../../pages/CourseDescriptionPage/CourseDescriptionPage'
-import SelectWorkout from '../../SelectWorkout/SelectWorkout'
+import Register from '../../../pages/Auth/Register'
+import TrainProgress from '../../../pages/ProgressFormPage/ProgressForm'
 
 function AppRoutes() {
   return (
@@ -17,6 +18,8 @@ function AppRoutes() {
       <Route path="/user" element={<User />} />
       <Route path="/lesson" element={<Lesson />} />
       <Route path="/login" element={<Auth />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/progress" element={<TrainProgress />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   )
