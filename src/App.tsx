@@ -1,11 +1,15 @@
-import React from 'react';
-import './App.css';
-import { AppRoutes } from './routes';
+import React from 'react'
+
+import AppRoutes from './components/routing/AppRoutes/AppRoutes'
+import { GlobalStyle } from './global.styles'
 
 function App() {
   return (
-    <AppRoutes/>
-  );
+    <>
+      <GlobalStyle />
+      <AppRoutes />
+    </>
+  )
 }
 
-export default App;
+export default App

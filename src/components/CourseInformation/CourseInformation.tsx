@@ -1,12 +1,11 @@
-import React, { FC } from "react";
-import { ICourse } from "../../types";
-import CourseName from "./CourseName/CourseName";
-import CourseDesires from "./CourseDesires/CourseDesires";
-import CourseDirections from "./CourseDirections/CourseDirections";
-import CourseDescription from "./CourseDescription/CourseDescription";
+import React, { FC } from 'react'
+import { ICourse } from '../../types'
+import CourseName from './CourseName/CourseName'
+import CourseDesires from './CourseDesires/CourseDesires'
+import CourseDirections from './CourseDirections/CourseDirections'
+import CourseDescription from './CourseDescription/CourseDescription'
 
 const CourseInformation: FC<ICourse> = ({
-  id,
   name,
   desires,
   directions,
@@ -19,7 +18,7 @@ const CourseInformation: FC<ICourse> = ({
       <CourseDirections directions={directions} />
       <CourseDescription description={description} />
     </>
-  );
-};
+  )
+}
 
-export default CourseInformation;
+export default CourseInformation

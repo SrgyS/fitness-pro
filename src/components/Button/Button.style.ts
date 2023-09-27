@@ -1,10 +1,10 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Button = styled.button`
   background: #580ea2;
   border-radius: 46px;
   padding: 12px 24px 16px;
-  font-family: StratosSkyeng;
+
   font-size: 18px;
   font-weight: 400;
   line-height: 24px;
@@ -16,4 +16,4 @@ export const Button = styled.button`
   &:hover {
     background: #3f007d;
   }
-`;
+`

@@ -1,14 +1,17 @@
-import React, { FC } from "react";
-import { NavLink } from "react-router-dom";
-import * as S from "./Logo.style";
-import logo from "../../assets/images/logo.svg";
+import React from 'react'
+import logoUrl from '../../assets/img/logo.svg'
+import * as S from './Logo.styles'
+interface LogoProps {
+  textColor?: string
+}
 
-const Logo: FC = () => {
+const Logo: React.FC<LogoProps> = ({ textColor }) => {
   return (
-    <NavLink to="/">
-      <S.Logo alt="SkyFitnessPro" src={logo} />
-    </NavLink>
-  );
-};
+    <S.StyledLogo $textColor={textColor}>
+      <img src={logoUrl} alt="Logo" />
+      <span>SkyFitnessPro</span>
+    </S.StyledLogo>
+  )
+}
 
-export default Logo;
+export default Logo
