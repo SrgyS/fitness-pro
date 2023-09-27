@@ -12,4 +12,7 @@ export const CardsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 40px;
+  @media (max-width: 860px) {
+    justify-content: center;
+  }
 `

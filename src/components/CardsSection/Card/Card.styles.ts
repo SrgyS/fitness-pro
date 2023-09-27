@@ -26,4 +26,7 @@ export const Card = styled.div<styledCardProps>`
     font-weight: 700;
     color: #000;
   }
+  @media (max-width: 400px) {
+    width: 300px;
+  height: 400px;
 `

@@ -6,7 +6,7 @@ export const StyledMain = styled.div`
   background: #271a58;
   min-height: 100vh;
 
-  @media (max-width: 1161px) {
+  @media (max-width: 1190px) {
     padding-left: 40px;
     padding-right: 40px;
   }
