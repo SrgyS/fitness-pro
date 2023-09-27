@@ -3,6 +3,7 @@ import * as S from './CardsSection.styles'
 import { BigButtonMain } from '../Buttons/MainButtons/Button.styles'
 import Card from './Card/Card'
 import { course } from '../../pages/CourseDescriptionPage/CourseDescriptionPage'
+import { useGetCoursesQuery } from '../../api/coursesApi'
 
 const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -25,6 +26,8 @@ const cardData = [
 ]
 
 const CardsSection = () => {
+  const { data, error, isLoading } = useGetCoursesQuery()
+  console.log(data)
   return (
     <S.CardsSection>
       <S.CardsWrapper>
