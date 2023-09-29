@@ -13,7 +13,7 @@ function AppRoutes() {
     <Routes>
       <Route path="/" element={<Main />} />
       <Route path="/about/:id" element={<CourseDescription />} />
-      <Route path="/user" element={<User />} />
+      <Route path="/user" element={<User/>} />
       <Route path="/lesson" element={<Lesson />} />
       <Route path="/login" element={<Auth />} />
       <Route path="*" element={<NotFound />} />
