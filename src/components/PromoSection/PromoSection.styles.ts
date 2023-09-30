@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import stickerSvg from '../../assets/img/sticker.svg'
 
-export const StyledPromo = styled.section``
+export const Promo = styled.section``
 
 export const PromoSubtitle = styled.h3`
   font-size: 20px;
@@ -15,6 +15,10 @@ export const PromoSubtitle = styled.h3`
 `
 export const ContentWrapper = styled.div`
   position: relative;
+  @media (max-width: 880px) {
+    display: flex;
+    flex-direction: column;
+  }
 `
 export const PromoTitle = styled.h1`
   display: inline-block;
@@ -22,9 +26,17 @@ export const PromoTitle = styled.h1`
   color: #f4f4ff;
   font-size: 60px;
   font-weight: 400;
-  line-height: 55px;
+  line-height: 1;
   letter-spacing: -1.169px;
   margin: 0;
+
+  @media (max-width: 1161px) {
+    max-width: 650px;
+  }
+
+  @media (max-width: 600px) {
+    font-size: 36px;
+  }
 `
 
 export const PromoSticker = styled.div`
@@ -54,5 +66,19 @@ export const PromoSticker = styled.div`
     line-height: 18px;
     letter-spacing: -0.15px;
     width: 149px;
+  }
+
+  @media (max-width: 1300px) {
+    right: -25px;
+  }
+  @media (max-width: 1225px) {
+    right: -0;
+  }
+  @media (max-width: 880px) {
+    position: relative;
+    align-self: end;
+  }
+  @media (max-width: 700px) {
+    display: none;
   }
 `

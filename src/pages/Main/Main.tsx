@@ -8,13 +8,11 @@ type Props = {}
 
 const Main = (props: Props) => {
   return (
-    <>
-      <StyledMain>
-        <Header />
-        <PromoSection />
-        <CardsSection />
-      </StyledMain>
-    </>
+    <StyledMain>
+      <Header />
+      <PromoSection />
+      <CardsSection />
+    </StyledMain>
   )
 }
 

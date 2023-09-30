@@ -5,7 +5,7 @@ type Props = {}
 
 const PromoSection = (props: Props) => {
   return (
-    <section>
+    <S.Promo>
       <S.ContentWrapper>
         <S.PromoSubtitle>Онлайн-тренировки для занятий дома</S.PromoSubtitle>
         <S.PromoTitle>
@@ -15,7 +15,7 @@ const PromoSection = (props: Props) => {
           <span>Измени своё тело за полгода</span>
         </S.PromoSticker>
       </S.ContentWrapper>
-    </section>
+    </S.Promo>
   )
 }
 
