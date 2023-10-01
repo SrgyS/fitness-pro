@@ -4,6 +4,7 @@ import { Button } from '../../components/Button/Button.style'
 import Header from '../../components/Header/Header'
 import { StyledMain } from '../Main/Main.styles'
 import Image from '../../assets/img/temp-for-video.jpg'
+import ExerciseProgress from '../../components/ProgressBar/ProgressBar'
 
 type Props = {}
 
@@ -33,7 +34,7 @@ const Lesson = (props: Props) => {
                 </S.Exercise>
               </S.ExercisesList>
             </S.Exercises>
-            <Button style={{ marginTop: '40px' }}>
+            <Button style={{ marginTop: '40px', marginBottom: '46px' }}>
               Заполнить свой прогресс
             </Button>
           </S.LessonExercises>
@@ -51,15 +52,9 @@ const Lesson = (props: Props) => {
                   </S.ExerciseName>
                 </S.ExercisesDone>
                 <S.ExerciseBox>
-                  <S.ExerciseProgress>
-                    <S.ExerciseCompletion>45%</S.ExerciseCompletion>
-                  </S.ExerciseProgress>
-                  <S.ExerciseProgress>
-                    <S.ExerciseCompletion>45%</S.ExerciseCompletion>
-                  </S.ExerciseProgress>
-                  <S.ExerciseProgress>
-                    <S.ExerciseCompletion>45%</S.ExerciseCompletion>
-                  </S.ExerciseProgress>
+                  <ExerciseProgress fillProgress="45" fillColor="#565EEF" />
+                  <ExerciseProgress fillProgress="45" fillColor="#FF6D00" />
+                  <ExerciseProgress fillProgress="45" fillColor="#9A48F1" />
                 </S.ExerciseBox>
               </S.ProgressContainer>
             </S.LessonProgressWrapper>
