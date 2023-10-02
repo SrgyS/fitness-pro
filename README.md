@@ -23,3 +23,31 @@ Run npm run dev to start development server
 Open http://localhost:3000 to view the app  
 ### Contributing
 Pull requests are welcome! Feel free to open an issue or submit a PR if you found a bug or want to propose a new feature.  
+
+
+import * as S from './Progress.styled'
+
+
+type Props = {}
+
+const TrainProgress = (props: Props) => {
+  return (
+    <S.ProgressPageContainer>
+    <S.ProgressFormBox>
+      <S.ProgressHeader>Мой прогресс</S.ProgressHeader>
+      <S.Inputs>
+        <S.Description>Сколько раз вы сделали наклоны вперед?</S.Description>
+        <S.ExerciseInput name="forward bends">
+        <S.Description>Сколько раз вы сделали наклоны назад?</S.Description>
+        <S.ExerciseInput name="bends back">
+        <S.Description>Сколько раз вы сделали поднятие ног, согнутых в коленях?</S.Description>
+        <S.ExerciseInput name="leg raising">
+      </S.Inputs>
+      <S.SendButton type="submit">Отправить</S.SendButton>
+    </S.ProgressFormBox>
+  </S.ProgressPageContainer>
+)
+  
+}
+
+export default TrainProgress

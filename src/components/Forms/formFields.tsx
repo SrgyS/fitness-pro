@@ -25,7 +25,9 @@ export const formData = {
     ],
   },
   ProgressForm: {
-    fields: [{ type: 'text', name: 'fieldA', placeholder: 'Введите значение' }],
+    fields: [
+      { type: 'text', name: 'fieldA', placeholder: 'Введите значение' }, 
+    ],
   },
   ChangePassWordForm: {
     fields: [

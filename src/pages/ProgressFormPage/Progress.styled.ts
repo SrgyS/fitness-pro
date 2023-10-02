@@ -49,10 +49,14 @@ export const ModalInput = styled.input`
   }
 `
 export const Inputs = styled.div`
-  padding-top: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
 `
 export const SendButton = styled.button`
-${commonButtonStyles}
+  ${commonButtonStyles}
   width: 278px;
   height: 52px;
   margin-bottom: 44px;
@@ -71,8 +75,20 @@ ${commonButtonStyles}
   }
 `
 
-export const Description = styled.span`
+export const Description = styled.p`
   font-size: 18px;
   font-weight: 400;
-  padding-bottom: 20px;
+`
+
+export const ExerciseInput = styled.input`
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #d0cece;
+  &::placeholder {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    color: #d0cece;
+  }
 `
