@@ -11,6 +11,7 @@ import Register from '../../../pages/Auth/Register'
 import TrainProgress from '../../../pages/ProgressFormPage/ProgressForm'
 import ChangePassword from '../../../pages/Auth/NewAuthMetasForms/ChangePassword'
 import ChangeLogin from '../../../pages/Auth/NewAuthMetasForms/ChangeLogin'
+import Exercises from '../../../pages/Exercises/ExercisesForm'
 
 function AppRoutes() {
   return (
@@ -24,6 +25,7 @@ function AppRoutes() {
       <Route path="/progress" element={<TrainProgress />} />
       <Route path="/change/password" element={<ChangePassword />} />
       <Route path="/change/login" element={<ChangeLogin />} />
+      <Route path="/exercises" element={<Exercises />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   )
