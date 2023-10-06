@@ -7,6 +7,10 @@ import Lesson from '../../../pages/Lesson/Lesson'
 import Main from '../../../pages/Main/Main'
 import NotFound from '../../../pages/NotFound/NotFound'
 import CourseDescription from '../../../pages/CourseDescriptionPage/CourseDescriptionPage'
+import Register from '../../../pages/Auth/Register'
+import TrainProgress from '../../../pages/ProgressFormPage/ProgressForm'
+import ChangePassword from '../../../pages/Auth/NewAuthMetasForms/ChangePassword'
+import ChangeLogin from '../../../pages/Auth/NewAuthMetasForms/ChangeLogin'
 
 function AppRoutes() {
   return (
@@ -16,6 +20,10 @@ function AppRoutes() {
       <Route path="/user" element={<User />} />
       <Route path="/lesson" element={<Lesson />} />
       <Route path="/login" element={<Auth />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/progress" element={<TrainProgress />} />
+      <Route path="/change/password" element={<ChangePassword />} />
+      <Route path="/change/login" element={<ChangeLogin />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   )
