@@ -80,3 +80,19 @@ export const ModalInput = styled.input`
 export const Inputs = styled.div`
   padding-top: 38px;
 `
+
+export const Description = styled.span`
+  font-size: 18px;
+  font-weight: 600;
+`
+
+export const ChangeLoginFormContainer = styled.div`
+  background-color: #ffffff;
+  width: 366px;
+  height: 331px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`

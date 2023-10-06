@@ -25,7 +25,20 @@ export const formData = {
     ],
   },
   ProgressForm: {
-    fields: [{ type: 'text', name: 'fieldA', placeholder: 'Введите значение' }],
+    fields: [
+      { type: 'text', name: 'fieldA', placeholder: 'Введите значение' }, 
+    ],
+  },
+  ChangePassWordForm: {
+    fields: [
+      { type: 'text', name: 'fieldA', placeholder: 'Пароль' },
+      { type: 'text', name: 'fieldA', placeholder: 'Повторите пароль' }
+    ],
+  },
+  ChangeLoginForm: {
+    fields: [
+      { type: 'text', name: 'fieldA', placeholder: 'Логин' },
+    ],
   },
   AuthFormRegister: {
     fields: [
