@@ -1,5 +1,5 @@
 export interface ICourse {
-  id?: string
+  _id?: string
   name: string
   desires: string[]
   directions: string[]
