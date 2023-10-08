@@ -38,7 +38,7 @@ const CardsSection = () => {
           <Card
             key={index}
             text={card.name}
-            imgUrl={require(`../../../src/assets/img/prof-card-3.png`)}
+            imgUrl={require(`../../../src/assets/img/prof-card-${(index + 1) % 5}.png`)}
             id={card._id}
             onClick={() => handleCard(card)}
           />
