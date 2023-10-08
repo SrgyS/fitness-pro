@@ -1,50 +1,87 @@
+import { useState } from 'react'
 import { Input } from './form.styled'
-import { FormField } from './form.styled'
-
-export function Form(props: any) {
-  const { fields } = props
-  const formFields = fields.map((field: any, index: number) => (
-    <div key={index}>
-      <label>{field.label}</label>
-      <Input
-        type={field.type}
-        name={field.name}
-        placeholder={field.placeholder}
-      />
-    </div>
-  ))
-
-  return <FormField>{formFields}</FormField>
-}
+import { FormField, LoginButton } from './form.styled'
+import { IFormData, IFormProps, IFormField } from '../../types'
+import { StyledError } from './form.styled'
 
 export const formData = {
   AuthFormLogIn: {
     fields: [
-      { type: 'text', name: 'field1', placeholder: 'Логин' },
-      { type: 'email', name: 'field2', placeholder: 'Пароль' },
+      { type: 'text', name: 'login', placeholder: 'Логин' },
+      { type: 'password', name: 'password', placeholder: 'Пароль' },
     ],
   },
   ProgressForm: {
-    fields: [
-      { type: 'text', name: 'fieldA', placeholder: 'Введите значение' }, 
-    ],
+    fields: [{ type: 'text', name: 'fieldA', placeholder: 'Введите значение' }],
   },
   ChangePassWordForm: {
     fields: [
-      { type: 'text', name: 'fieldA', placeholder: 'Пароль' },
-      { type: 'text', name: 'fieldA', placeholder: 'Повторите пароль' }
+      { type: 'password', name: 'password', placeholder: 'Пароль' },
+      {
+        type: 'password',
+        name: 'password-repeat',
+        placeholder: 'Повторите пароль',
+      },
     ],
   },
   ChangeLoginForm: {
-    fields: [
-      { type: 'text', name: 'fieldA', placeholder: 'Логин' },
-    ],
+    fields: [{ type: 'text', name: 'login', placeholder: 'Логин' }],
   },
   AuthFormRegister: {
     fields: [
-      { type: 'text', name: 'field1', placeholder: 'Логин' },
-      { type: 'email', name: 'field2', placeholder: 'Пароль' },
-      { type: 'email', name: 'field2', placeholder: 'Повторите пароль' },
+      { type: 'text', name: 'login', placeholder: 'Логин' },
+      { type: 'password', name: 'password', placeholder: 'Пароль' },
+      {
+        type: 'password',
+        name: 'password-repeat',
+        placeholder: 'Повторите пароль',
+      },
     ],
   },
+}
+
+export function Form(props: IFormProps) {
+  const { fields, onSubmit, buttonText } = props
+
+  const [formData, setFormData] = useState<IFormData>({})
+  const [error, setError] = useState('')
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
+  }
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (!formData.login || !formData.password) {
+      setError('Заполните поля')
+      return
+    }
+    const { login, password } = formData
+
+    if (!login.trim() || !password.trim()) {
+      setError('Введите лигин и пароль')
+      return
+    }
+    if (onSubmit) {
+      onSubmit(formData)
+    }
+  }
+  const formFields = fields.map((field: IFormField, index: number) => (
+    <div key={index}>
+      <Input
+        type={field.type}
+        name={field.name}
+        placeholder={field.placeholder}
+        onChange={handleChange}
+      />
+    </div>
+  ))
+
+  return (
+    <FormField onSubmit={handleSubmit}>
+      {formFields}
+      {error && <StyledError>{error}</StyledError>}
+      <LoginButton type="submit">{buttonText}</LoginButton>
+    </FormField>
+  )
 }

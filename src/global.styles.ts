@@ -39,4 +39,12 @@ body,
   box-sizing: border-box;
 }
  }
+ a {
+  all: unset;
+}
+
+ .underline {
+  color: rgba(88, 14, 162, 1);
+text-decoration: underline;
+ }
 `

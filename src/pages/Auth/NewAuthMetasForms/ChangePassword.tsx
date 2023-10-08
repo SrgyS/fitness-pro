@@ -15,6 +15,7 @@ const ChangePassword = (props: Props) => {
           <Form
             fields={formData.ChangePassWordForm.fields}
             title="Изменить пароль"
+            buttonText="Сохранить"
           />
         </S.Inputs>
         <S.LoginButton type="submit">Сохранить</S.LoginButton>

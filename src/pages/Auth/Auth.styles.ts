@@ -57,12 +57,12 @@ export const RegisterButton = styled.button`
 export const LoginFormContainer = styled.div`
   background-color: #ffffff;
   width: 366px;
-  height: 439px;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 33px 47px 47px 41px;
 `
 export const ModalInput = styled.input`
   width: 100%;

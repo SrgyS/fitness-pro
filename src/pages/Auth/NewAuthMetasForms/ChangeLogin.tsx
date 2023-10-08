@@ -15,6 +15,7 @@ const ChangeLogin = (props: Props) => {
           <Form
             fields={formData.ChangeLoginForm.fields}
             title="Изменить пароль"
+            buttonText="Сохранить"
           />
         </S.Inputs>
         <S.LoginButton type="submit">Сохранить</S.LoginButton>
