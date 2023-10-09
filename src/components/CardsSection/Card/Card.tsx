@@ -6,12 +6,13 @@ interface CardProps {
   text: string
   imgUrl: string
   id?: string
+  onClick: () => void
 }
 
-const Card = ({ text, imgUrl, id }: CardProps) => {
+const Card = ({ text, imgUrl, id, onClick }: CardProps) => {
   return (
     <Link to={`/about/${id}`}>
-      <S.Card $imgUrl={imgUrl}>
+      <S.Card $imgUrl={imgUrl} onClick={onClick}>
         <span>{text}</span>
       </S.Card>
     </Link>
