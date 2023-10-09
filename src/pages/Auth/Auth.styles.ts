@@ -6,6 +6,13 @@ const commonButtonStyles = css`
   font-weight: 400;
   transition: background-color 0.3s ease;
   display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
 `
 
 export const AuthPageContainer = styled.div`
@@ -24,10 +31,7 @@ export const LoginButton = styled.button`
   height: 52px;
   margin-bottom: 20px;
   margin-top: 60px;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 24px;
+
   color: white;
   background-color: #580ea2;
   &:hover {
@@ -40,12 +44,11 @@ export const LoginButton = styled.button`
 
 export const RegisterButton = styled.button`
   ${commonButtonStyles}
-  width: 278px;
+  width:278px;
   height: 52px;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 24px;
+  border: 1px solid #d0cece;
+
+  background: #fff;
   &:hover {
     background-color: #d0cece;
   }
@@ -84,15 +87,20 @@ export const Inputs = styled.div`
 export const Description = styled.span`
   font-size: 18px;
   font-weight: 600;
+  display: block;
+  margin-bottom: 20px;
 `
 
 export const ChangeLoginFormContainer = styled.div`
   background-color: #ffffff;
   width: 366px;
-  height: 331px;
+  padding: 33px 47px 47px 41px;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  &button {
+    margin-bottom: 0;
+  }
 `

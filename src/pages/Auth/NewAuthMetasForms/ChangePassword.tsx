@@ -18,7 +18,6 @@ const ChangePassword = (props: Props) => {
             buttonText="Сохранить"
           />
         </S.Inputs>
-        <S.LoginButton type="submit">Сохранить</S.LoginButton>
       </S.LoginFormContainer>
     </S.AuthPageContainer>
   )
