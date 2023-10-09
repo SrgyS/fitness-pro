@@ -37,7 +37,7 @@ const UserMenu = (props: Props) => {
         </S.StyledMenuItem>
 
         <S.StyledMenuItem onClick={() => dispatch(removeUser())}>
-          <a>Выйти</a>
+          <S.StyledMenuButton>Выйти</S.StyledMenuButton>
         </S.StyledMenuItem>
       </S.StyledUserMenuList>
     </S.StyledUserMenu>
