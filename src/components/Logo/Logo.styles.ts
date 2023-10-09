@@ -4,6 +4,7 @@ interface StyledLogoProps {
 }
 
 export const StyledLogo = styled.div<StyledLogoProps>`
+  cursor: pointer;
   width: 220px;
   height: 35px;
 
