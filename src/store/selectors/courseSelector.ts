@@ -1,5 +1,6 @@
-import { RootState } from '../store'
+import { RootState } from '../../store'
 
-export const selectorCourseList = (state: RootState) => state.course.courseList
+export const selectorCourseList = (state: RootState) => state.courses.courseList
 
-export const selectorSelectedCourse = (state: RootState) => state.course.selectedCourse
+export const selectorSelectedCourse = (state: RootState) =>
+  state.courses.selectedCourse

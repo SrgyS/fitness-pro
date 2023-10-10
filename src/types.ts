@@ -20,4 +20,5 @@ export interface IFormProps {
   onSubmit?: (formData: IFormData) => void
   title?: string
   buttonText: string
+  errorMessage?: string
 }

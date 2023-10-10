@@ -41,7 +41,7 @@ export const formData = {
 }
 
 export function Form(props: IFormProps) {
-  const { fields, onSubmit, buttonText } = props
+  const { fields, onSubmit, buttonText, errorMessage } = props
 
   const [formData, setFormData] = useState<IFormData>({})
   const [error, setError] = useState('')
@@ -64,6 +64,7 @@ export function Form(props: IFormProps) {
     }
     if (onSubmit) {
       onSubmit(formData)
+      setError('')
     }
   }
   const formFields = fields.map((field: IFormField, index: number) => (
@@ -80,7 +81,9 @@ export function Form(props: IFormProps) {
   return (
     <FormField onSubmit={handleSubmit}>
       {formFields}
-      {error && <StyledError>{error}</StyledError>}
+      {(errorMessage || error) && (
+        <StyledError>{error || errorMessage}</StyledError>
+      )}
       <LoginButton type="submit">{buttonText}</LoginButton>
     </FormField>
   )

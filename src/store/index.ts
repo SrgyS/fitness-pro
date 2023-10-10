@@ -1,16 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit'
-import coursesReducer from './slices/coursesSlice'
+import courseSlice from './slices/courseSlice'
 import userReducer from './slices/userSlice'
-import { coursesApi } from '../api/coursesApi'
+import { courseListApi } from './services/courseService'
 
 export const store = configureStore({
   reducer: {
-    courses: coursesReducer,
+    courses: courseSlice,
     user: userReducer,
-    [coursesApi.reducerPath]: coursesApi.reducer,
+    [courseListApi.reducerPath]: courseListApi.reducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(coursesApi.middleware),
+    getDefaultMiddleware().concat(courseListApi.middleware),
 })
 
 export type AppDispatch = typeof store.dispatch

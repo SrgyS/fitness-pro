@@ -6,12 +6,14 @@ import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 import { setUser } from '../../store/slices/userSlice'
 import { useAppDispatch } from '../../hooks/reduxHooks'
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 
 type Props = {}
 
 const Register = (props: Props) => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
+  const [errorMessage, setErrorMessage] = useState('')
 
   const handleRegister = async (formData: IFormData) => {
     const auth = getAuth()
@@ -35,8 +37,14 @@ const Register = (props: Props) => {
         )
         navigate('/')
       }
-    } catch (error) {
-      console.error(error)
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        const firebaseError = error as Error
+        console.error(firebaseError)
+        setErrorMessage(firebaseError.message)
+      } else {
+        console.error('Неизвестная ошибка:', error)
+      }
     }
   }
   return (
@@ -49,6 +57,7 @@ const Register = (props: Props) => {
             title="Регистрация"
             onSubmit={handleRegister}
             buttonText="Зарегистрироваться"
+            errorMessage={errorMessage}
           />
         </S.Inputs>
       </S.LoginFormContainer>
