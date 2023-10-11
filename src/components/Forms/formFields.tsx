@@ -40,31 +40,39 @@ export const formData = {
   },
 }
 
+type FormErrors = {
+  [key: string]: string
+}
+
 export function Form(props: IFormProps) {
   const { fields, onSubmit, buttonText, errorMessage } = props
 
-  const [formData, setFormData] = useState<IFormData>({})
-  const [error, setError] = useState('')
+  const InitialFormData: IFormData = {}
+  const [formDataInput, setFormDataInput] = useState<IFormData>(InitialFormData)
+  const [error, setError] = useState<FormErrors>({})
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
+    setFormDataInput({ ...formDataInput, [name]: value })
   }
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!formData.login || !formData.password) {
-      setError('Заполните поля')
-      return
-    }
-    const { login, password } = formData
 
-    if (!login.trim() || !password.trim()) {
-      setError('Введите лигин и пароль')
+    const fieldErrors: FormErrors = {}
+
+    fields.forEach(field => {
+      if (!formDataInput[field.name]) {
+        fieldErrors[field.name] = `Заполните ${field.name}`
+      }
+    })
+    if (Object.keys(fieldErrors).length > 0) {
+      setError(fieldErrors)
       return
     }
+
     if (onSubmit) {
-      onSubmit(formData)
-      setError('')
+      onSubmit(formDataInput)
+      setError({})
     }
   }
   const formFields = fields.map((field: IFormField, index: number) => (
@@ -75,15 +83,16 @@ export function Form(props: IFormProps) {
         placeholder={field.placeholder}
         onChange={handleChange}
       />
+      {error && error[field.name] && (
+        <StyledError>{error[field.name]}</StyledError>
+      )}
     </div>
   ))
 
   return (
     <FormField onSubmit={handleSubmit}>
       {formFields}
-      {(errorMessage || error) && (
-        <StyledError>{error || errorMessage}</StyledError>
-      )}
+      {errorMessage && <StyledError>{errorMessage}</StyledError>}
       <LoginButton type="submit">{buttonText}</LoginButton>
     </FormField>
   )

@@ -1,3 +1,4 @@
+import { coreModuleName } from '@reduxjs/toolkit/query'
 import styled from 'styled-components'
 
 export const CardsSection = styled.section`
@@ -15,4 +16,8 @@ export const CardsWrapper = styled.div`
   @media (max-width: 860px) {
     justify-content: center;
   }
+`
+export const StyledError = styled.p`
+  color: coral;
+  font-size: 32px;
 `

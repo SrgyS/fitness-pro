@@ -33,6 +33,7 @@ const Auth = (props: Props) => {
             email: user.email,
             id: user.uid,
             token: token,
+            password: formData.password,
           }),
         )
         navigate('/user')

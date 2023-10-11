@@ -2,15 +2,15 @@ import React from 'react'
 import * as S from './UserList.Styles'
 import { NavLink } from 'react-router-dom'
 
-type Props = { name: string }
+type Props = { name: string; password: string }
 
-const UserList = ({ name }: Props) => {
+const UserList = ({ name, password }: Props) => {
   return (
     <S.List>
       <S.Profile> Мой профиль </S.Profile>
       <div>
         <S.UserInfo> Логин: {name} </S.UserInfo>
-        <S.UserInfo> Пароль: 4fkhdj880d </S.UserInfo>
+        <S.UserInfo> Пароль: {password} </S.UserInfo>
       </div>
       <S.UserInfoButton>
         <S.UserButton>

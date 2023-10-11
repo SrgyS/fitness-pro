@@ -33,9 +33,10 @@ const Register = (props: Props) => {
             email: user.email,
             id: user.uid,
             token: token,
+            password: formData.password,
           }),
         )
-        navigate('/')
+        navigate('/user')
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
