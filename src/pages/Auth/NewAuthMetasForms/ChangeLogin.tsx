@@ -1,4 +1,9 @@
-import { getAuth, updateEmail } from 'firebase/auth'
+import {
+  EmailAuthProvider,
+  getAuth,
+  reauthenticateWithCredential,
+  updateEmail,
+} from 'firebase/auth'
 import { Form, formData } from '../../../components/Forms/formFields'
 import Logo from '../../../components/Logo/Logo'
 import { changeEmail } from '../../../store/slices/userSlice'
@@ -7,6 +12,7 @@ import { useState } from 'react'
 import { IFormData } from '../../../types'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../../hooks/useAuth'
 
 type Props = {}
 
@@ -16,29 +22,35 @@ const ChangeLogin = (props: Props) => {
   const dispatch = useDispatch()
   const user = auth.currentUser
   const navigate = useNavigate()
+  const { password, email } = useAuth()
 
   const handleChangeLogin = async (formData: IFormData) => {
     try {
       const newEmail = formData.login
-      console.log('newEmail', newEmail)
 
       if (!user) {
         setErrorMessage('Пользователь не авторизован')
         return
       }
+      if (email) {
+        try {
+          const credentials = EmailAuthProvider.credential(email, password)
 
-      try {
-        await updateEmail(user, newEmail)
-        dispatch(
-          changeEmail({
-            email: newEmail,
-          }),
-        )
-        setErrorMessage('')
-        navigate('/user')
-      } catch (error) {
-        console.error(error)
-        setErrorMessage('Ошибка при смене логина')
+          await reauthenticateWithCredential(user, credentials)
+
+          await updateEmail(user, newEmail)
+
+          dispatch(
+            changeEmail({
+              email: newEmail,
+            }),
+          )
+          setErrorMessage('')
+          navigate('/user')
+        } catch (error) {
+          console.error(error)
+          setErrorMessage('Ошибка при смене логина')
+        }
       }
     } catch (error) {
       console.error(error)

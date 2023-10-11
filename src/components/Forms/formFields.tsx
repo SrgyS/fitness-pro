@@ -19,7 +19,7 @@ export const formData = {
       { type: 'password', name: 'password', placeholder: 'Пароль' },
       {
         type: 'password',
-        name: 'password-repeat',
+        name: 'password-confirm',
         placeholder: 'Повторите пароль',
       },
     ],
@@ -33,7 +33,7 @@ export const formData = {
       { type: 'password', name: 'password', placeholder: 'Пароль' },
       {
         type: 'password',
-        name: 'password-repeat',
+        name: 'password-confirm',
         placeholder: 'Повторите пароль',
       },
     ],
@@ -65,6 +65,11 @@ export function Form(props: IFormProps) {
         fieldErrors[field.name] = `Заполните ${field.name}`
       }
     })
+
+    if (formDataInput['password'] !== formDataInput['password-confirm']) {
+      fieldErrors['password-confirm'] = 'Пароли не совпадают'
+    }
+
     if (Object.keys(fieldErrors).length > 0) {
       setError(fieldErrors)
       return

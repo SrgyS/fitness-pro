@@ -1,4 +1,3 @@
-import { coreModuleName } from '@reduxjs/toolkit/query'
 import styled from 'styled-components'
 
 export const CardsSection = styled.section`

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import * as S from './UserMenu.styles'
 import { useDispatch } from 'react-redux'
 import { removeUser } from '../../../store/slices/userSlice'
