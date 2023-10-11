@@ -19,7 +19,7 @@ export const formData = {
       { type: 'password', name: 'password', placeholder: 'Пароль' },
       {
         type: 'password',
-        name: 'password-repeat',
+        name: 'password-confirm',
         placeholder: 'Повторите пароль',
       },
     ],
@@ -33,38 +33,54 @@ export const formData = {
       { type: 'password', name: 'password', placeholder: 'Пароль' },
       {
         type: 'password',
-        name: 'password-repeat',
+        name: 'password-confirm',
         placeholder: 'Повторите пароль',
       },
     ],
   },
 }
 
+type FormErrors = {
+  [key: string]: string
+}
+
 export function Form(props: IFormProps) {
   const { fields, onSubmit, buttonText, errorMessage } = props
 
-  const [formData, setFormData] = useState<IFormData>({})
-  const [error, setError] = useState('')
+  const InitialFormData: IFormData = {}
+  const [inputsData, setInputsData] = useState<IFormData>(InitialFormData)
+  const [error, setError] = useState<FormErrors>({})
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
+    setInputsData({ ...inputsData, [name]: value })
   }
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!formData.login || !formData.password) {
-      setError('Заполните поля')
-      return
-    }
-    const { login, password } = formData
 
-    if (!login.trim() || !password.trim()) {
-      setError('Введите лигин и пароль')
+    const fieldErrors: FormErrors = {}
+
+    fields.forEach(field => {
+      if (!inputsData[field.name]) {
+        fieldErrors[field.name] = `Заполните ${field.name}`
+      }
+    })
+    if (
+      inputsData['password'] &&
+      inputsData['password-confirm'] &&
+      inputsData['password'] !== inputsData['password-confirm']
+    ) {
+      fieldErrors['password-confirm'] = 'Пароли не совпадают'
+    }
+
+    if (Object.keys(fieldErrors).length > 0) {
+      setError(fieldErrors)
       return
     }
+
     if (onSubmit) {
-      onSubmit(formData)
-      setError('')
+      onSubmit(inputsData)
+      setError({})
     }
   }
   const formFields = fields.map((field: IFormField, index: number) => (
@@ -75,15 +91,16 @@ export function Form(props: IFormProps) {
         placeholder={field.placeholder}
         onChange={handleChange}
       />
+      {error && error[field.name] && (
+        <StyledError>{error[field.name]}</StyledError>
+      )}
     </div>
   ))
 
   return (
     <FormField onSubmit={handleSubmit}>
       {formFields}
-      {(errorMessage || error) && (
-        <StyledError>{error || errorMessage}</StyledError>
-      )}
+      {errorMessage && <StyledError>{errorMessage}</StyledError>}
       <LoginButton type="submit">{buttonText}</LoginButton>
     </FormField>
   )

@@ -1,12 +1,12 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
-const commonButtonStyles = css`
-  border-radius: 46px;
-  cursor: pointer;
-  font-weight: 400;
-  transition: background-color 0.3s ease;
-  display: inline-block;
-`
+// const commonButtonStyles = css`
+//   border-radius: 46px;
+//   cursor: pointer;
+//   font-weight: 400;
+//   transition: background-color 0.3s ease;
+//   display: inline-block;
+// `
 
 export const ProgressPageContainer = styled.div`
   max-width: 100%;
@@ -67,8 +67,8 @@ export const ChooseBtn = styled.button`
   font-weight: 400;
   transition: all 0.3s ease;
   &:hover {
-    border-color: #06B16E;
-color: #06B16E;
+    border-color: #06b16e;
+    color: #06b16e;
   }
   &:active {
     background-color: #d1cece;

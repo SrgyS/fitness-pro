@@ -20,7 +20,7 @@ const CardsSection = () => {
   const courseList = useAppSelector(selectorCourseList)
   const dispatch = useAppDispatch()
   console.log(courseList)
-  
+
   useEffect(() => {
     if (!isLoading && !error) {
       dispatch(setCourseList(data))
@@ -33,18 +33,27 @@ const CardsSection = () => {
 
   return (
     <S.CardsSection>
+      {error && (
+        <S.StyledError>
+          Что-то пошло не так, проверьте подключение к интернету!
+        </S.StyledError>
+      )}
       <S.CardsWrapper>
         {courseList.map((card: ICourse, index: number) => (
           <Card
             key={index}
             text={card.name}
-            imgUrl={require(`../../../src/assets/img/prof-card-${(index + 1) % 5}.png`)}
+            imgUrl={require(
+              `../../../src/assets/img/prof-card-${(index + 1) % 5}.png`,
+            )}
             id={card._id}
             onClick={() => handleCard(card)}
           />
         ))}
       </S.CardsWrapper>
-      <BigButtonMain onClick={scrollToTop}>Наверх &uarr;</BigButtonMain>
+      {!error && (
+        <BigButtonMain onClick={scrollToTop}>Наверх &uarr;</BigButtonMain>
+      )}
     </S.CardsSection>
   )
 }

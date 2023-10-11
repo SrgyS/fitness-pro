@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import CourseName from './CourseName/CourseName'
-import CourseDesires from './CourseDesires/CourseDesires'
+
 import CourseDirections from './CourseDirections/CourseDirections'
 import CourseDescription from './CourseDescription/CourseDescription'
 import { useAppSelector } from '../../store/hooks/useAppHook'
@@ -8,7 +8,7 @@ import { selectorSelectedCourse } from '../../store/selectors/courseSelector'
 
 const CourseInformation: FC = () => {
   const course = useAppSelector(selectorSelectedCourse)
-  const { name, desires, description, directions } = course
+  const { name, description, directions } = course
   return (
     <>
       <CourseName name={name} />
