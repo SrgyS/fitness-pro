@@ -5,14 +5,15 @@ import { Link, useNavigate } from 'react-router-dom'
 import { IFormData } from '../../types'
 import { useAppDispatch } from '../../hooks/reduxHooks'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
-import { useDispatch } from 'react-redux'
 import { setUser } from '../../store/slices/userSlice'
+import { useState } from 'react'
 
 type Props = {}
 
 const Auth = (props: Props) => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
+  const [errorMessage, setErrorMessage] = useState('')
   const handleLogin = async (formData: IFormData) => {
     const auth = getAuth()
 
@@ -36,8 +37,14 @@ const Auth = (props: Props) => {
         )
         navigate('/user')
       }
-    } catch (error) {
-      console.error(error)
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        const firebaseError = error as Error
+        console.error(firebaseError)
+        setErrorMessage(firebaseError.message)
+      } else {
+        console.error('Неизвестная ошибка:', error)
+      }
     }
   }
   return (
@@ -50,6 +57,7 @@ const Auth = (props: Props) => {
             title="Вход"
             onSubmit={handleLogin}
             buttonText="Войти"
+            errorMessage={errorMessage}
           />
         </S.Inputs>
         <Link to="/register">

@@ -30,3 +30,6 @@ export const StyledMenuItem = styled.li`
     color: rgba(88, 14, 162, 0.7);
   }
 `
+export const StyledMenuButton = styled.button`
+  all: unset;
+`

@@ -1,5 +1,5 @@
 export interface ICourse {
-  id?: string
+  _id?: string
   name: string
   desires: string[]
   directions: string[]
@@ -20,4 +20,5 @@ export interface IFormProps {
   onSubmit?: (formData: IFormData) => void
   title?: string
   buttonText: string
+  errorMessage?: string
 }
