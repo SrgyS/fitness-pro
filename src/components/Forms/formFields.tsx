@@ -48,12 +48,12 @@ export function Form(props: IFormProps) {
   const { fields, onSubmit, buttonText, errorMessage } = props
 
   const InitialFormData: IFormData = {}
-  const [formDataInput, setFormDataInput] = useState<IFormData>(InitialFormData)
+  const [inputsData, setInputsData] = useState<IFormData>(InitialFormData)
   const [error, setError] = useState<FormErrors>({})
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setFormDataInput({ ...formDataInput, [name]: value })
+    setInputsData({ ...inputsData, [name]: value })
   }
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -61,12 +61,15 @@ export function Form(props: IFormProps) {
     const fieldErrors: FormErrors = {}
 
     fields.forEach(field => {
-      if (!formDataInput[field.name]) {
+      if (!inputsData[field.name]) {
         fieldErrors[field.name] = `Заполните ${field.name}`
       }
     })
-
-    if (formDataInput['password'] !== formDataInput['password-confirm']) {
+    if (
+      inputsData['password'] &&
+      inputsData['password-confirm'] &&
+      inputsData['password'] !== inputsData['password-confirm']
+    ) {
       fieldErrors['password-confirm'] = 'Пароли не совпадают'
     }
 
@@ -76,7 +79,7 @@ export function Form(props: IFormProps) {
     }
 
     if (onSubmit) {
-      onSubmit(formDataInput)
+      onSubmit(inputsData)
       setError({})
     }
   }
