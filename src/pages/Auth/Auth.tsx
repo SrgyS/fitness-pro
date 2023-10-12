@@ -38,6 +38,15 @@ const Auth = (props: Props) => {
             password: formData.password,
           }),
         )
+        localStorage.setItem(
+          'user',
+          JSON.stringify({
+            email: user.email,
+            id: user.uid,
+            token: token,
+            password: formData.password,
+          }),
+        )
         navigate('/user')
       }
     } catch (error: unknown) {
