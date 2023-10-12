@@ -10,6 +10,7 @@ interface CardProps {
 }
 
 const Card = ({ text, imgUrl, id, onClick }: CardProps) => {
+  console.log(text, imgUrl, id)
   return (
     <Link to={`/about/${id}`}>
       <S.Card $imgUrl={imgUrl} onClick={onClick}>
