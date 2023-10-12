@@ -19,7 +19,6 @@ const CardsSection = () => {
   const { data, isLoading, error } = useGetCourseListQuery({})
   const courseList = useAppSelector(selectorCourseList)
   const dispatch = useAppDispatch()
-
   useEffect(() => {
     if (!isLoading && !error) {
       dispatch(setCourseList(data))
@@ -32,6 +31,11 @@ const CardsSection = () => {
 
   return (
     <S.CardsSection>
+      {error && (
+        <S.StyledError>
+          Что-то пошло не так, проверьте подключение к интернету!
+        </S.StyledError>
+      )}
       <S.CardsWrapper>
         {courseList.map((card: ICourse, index: number) => (
           <Card
@@ -45,7 +49,9 @@ const CardsSection = () => {
           />
         ))}
       </S.CardsWrapper>
-      <BigButtonMain onClick={scrollToTop}>Наверх &uarr;</BigButtonMain>
+      {!error && (
+        <BigButtonMain onClick={scrollToTop}>Наверх &uarr;</BigButtonMain>
+      )}
     </S.CardsSection>
   )
 }

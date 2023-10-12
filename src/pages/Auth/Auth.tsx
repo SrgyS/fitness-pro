@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Form, formData } from '../../components/Forms/formFields'
 import * as S from './Auth.styles'
 import Logo from '../../components/Logo/Logo'
@@ -6,7 +7,6 @@ import { IFormData } from '../../types'
 import { useAppDispatch } from '../../hooks/reduxHooks'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import { setUser } from '../../store/slices/userSlice'
-import { useState } from 'react'
 
 type Props = {}
 
@@ -14,10 +14,12 @@ const Auth = (props: Props) => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const [errorMessage, setErrorMessage] = useState('')
+
   const handleLogin = async (formData: IFormData) => {
     const auth = getAuth()
 
     try {
+      console.log('login', formData.login)
       const userCredential = await signInWithEmailAndPassword(
         auth,
         formData.login,
@@ -33,6 +35,7 @@ const Auth = (props: Props) => {
             email: user.email,
             id: user.uid,
             token: token,
+            password: formData.password,
           }),
         )
         navigate('/user')

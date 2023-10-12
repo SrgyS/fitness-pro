@@ -16,3 +16,7 @@ export const CardsWrapper = styled.div`
     justify-content: center;
   }
 `
+export const StyledError = styled.p`
+  color: coral;
+  font-size: 32px;
+`

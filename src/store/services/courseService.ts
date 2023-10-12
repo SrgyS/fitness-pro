@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const courseListApi = createApi({
-  reducerPath: 'tracksListApi',
+  reducerPath: 'courseListApi',
   baseQuery: fetchBaseQuery({
     baseUrl:
       'https://fitness-pro-courses-default-rtdb.europe-west1.firebasedatabase.app/',
