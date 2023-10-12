@@ -11,19 +11,19 @@ const UserCourses = (props: Props) => {
       <S.UserCourse>
         <S.Yoga>
           <S.TextCourses>Йога</S.TextCourses>
-          <Link to="#">
+          <Link to="/exercises/yoga">
             <S.UserCourseButton>Перейти →</S.UserCourseButton>
           </Link>
         </S.Yoga>
         <S.Stretching>
           <S.TextCourses>Стретчинг</S.TextCourses>
-          <Link to="#">
+          <Link to="/exercises/stretching">
             <S.UserCourseButton>Перейти →</S.UserCourseButton>
           </Link>
         </S.Stretching>
         <S.BodyFlex>
           <S.TextCourses>Бодифлекс</S.TextCourses>
-          <Link to="#">
+          <Link to="/exercises/bodyflex">
             <S.UserCourseButton>Перейти →</S.UserCourseButton>
           </Link>
         </S.BodyFlex>

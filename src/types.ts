@@ -1,3 +1,12 @@
+export interface IWorkout {
+  _id?: string
+  course: string
+  name: string
+  number: number
+  desires: string[]
+  directions: string[]
+}
+
 export interface ICourse {
   _id?: string
   name: string

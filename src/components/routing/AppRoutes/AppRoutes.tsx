@@ -29,7 +29,7 @@ function AppRoutes() {
         <Route path="/progress" element={<TrainProgress />} />
         <Route path="/change/password" element={<ChangePassword />} />
         <Route path="/change/login" element={<ChangeLogin />} />
-        <Route path="/exercises" element={<Exercises />} />
+        <Route path="/exercises/:section" element={<Exercises />} />
       </Route>
 
       <Route path="*" element={<NotFound />} />

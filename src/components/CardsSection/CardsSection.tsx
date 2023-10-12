@@ -17,6 +17,7 @@ const scrollToTop = () => {
 
 const CardsSection = () => {
   const { data, isLoading, error } = useGetCourseListQuery({})
+  console.log(data)
   const courseList = useAppSelector(selectorCourseList)
   const dispatch = useAppDispatch()
   console.log(courseList)

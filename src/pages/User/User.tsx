@@ -4,12 +4,15 @@ import UserList from '../../components/UserList/UserList'
 import UserCourses from '../../components/UserCourses/UserCourses'
 import { StyledUser } from './User.Styles'
 import { useAuth } from '../../hooks/useAuth'
+import { useGetExerciseListQuery } from '../../store/services/exerciseService'
 
 type Props = {}
 
 const User = (props: Props) => {
   const { user, email } = useAuth()
+  const {data} = useGetExerciseListQuery({})
 
+  console.log(data)
   return (
     <>
       <StyledUser>

@@ -1,70 +1,39 @@
+import { useEffect } from 'react'
+import { useAppSelector } from '../../hooks/reduxHooks'
+import { selectorWorkoutList } from '../../store/selectors/exerciseSelector'
+import { useGetExerciseListQuery } from '../../store/services/exerciseService'
+import { setWorkoutList } from '../../store/slices/exerciseSlice'
+import { IWorkout } from '../../types'
+
 import * as S from './Exercises.styled'
+import ExercisesBox from './ExercisesBox'
+import { useDispatch } from 'react-redux'
+
 
 type Props = {}
 
 const Exercises = (props: Props) => {
+  const { data, isLoading, error } = useGetExerciseListQuery({})
+  const workoutList = useAppSelector(selectorWorkoutList)
+  console.log(workoutList)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (!isLoading && !error) {
+      dispatch(setWorkoutList(data))
+    }
+  }, [data, error, isLoading, dispatch])
+
   return (
     <S.ProgressPageContainer>
       <S.ProgressFormBox>
         <S.ProgressHeader>Выберите тренировку</S.ProgressHeader>
-        <S.ExercisesBox>
-          <S.ChooseBtn>
-            <S.BtnTextBox>
-              <S.ChooseBtnHeader>Утренняя практика</S.ChooseBtnHeader>
-              <S.ChooseBtnParagraph>
-                Йога на каждый день / 1 день
-              </S.ChooseBtnParagraph>
-            </S.BtnTextBox>
-          </S.ChooseBtn>
-          <S.ChooseBtn>
-            <S.BtnTextBox>
-              <S.ChooseBtnHeader>Красота и здоровье</S.ChooseBtnHeader>
-              <S.ChooseBtnParagraph>
-                Йога на каждый день / 2 день
-              </S.ChooseBtnParagraph>
-            </S.BtnTextBox>
-          </S.ChooseBtn>
-          <S.ChooseBtn>
-            <S.BtnTextBox>
-              <S.ChooseBtnHeader>Асаны стоя</S.ChooseBtnHeader>
-              <S.ChooseBtnParagraph>
-                Йога на каждый день / 3 день
-              </S.ChooseBtnParagraph>
-            </S.BtnTextBox>
-          </S.ChooseBtn>
-          <S.ChooseBtn>
-            <S.BtnTextBox>
-              <S.ChooseBtnHeader>Растягиваем мышцы бедра</S.ChooseBtnHeader>
-              <S.ChooseBtnParagraph>
-                Йога на каждый день / 4 день
-              </S.ChooseBtnParagraph>
-            </S.BtnTextBox>
-          </S.ChooseBtn>
-          <S.ChooseBtn>
-            <S.BtnTextBox>
-              <S.ChooseBtnHeader>Гибкость спины</S.ChooseBtnHeader>
-              <S.ChooseBtnParagraph>
-                Йога на каждый день / 5 день
-              </S.ChooseBtnParagraph>
-            </S.BtnTextBox>
-          </S.ChooseBtn>
-          <S.ChooseBtn>
-            <S.BtnTextBox>
-              <S.ChooseBtnHeader>Растягиваем мышцы бедра</S.ChooseBtnHeader>
-              <S.ChooseBtnParagraph>
-                Йога на каждый день / 1 день
-              </S.ChooseBtnParagraph>
-            </S.BtnTextBox>
-          </S.ChooseBtn>
-          <S.ChooseBtn>
-            <S.BtnTextBox>
-              <S.ChooseBtnHeader>Утренняя практика</S.ChooseBtnHeader>
-              <S.ChooseBtnParagraph>
-                Йога на каждый день / 1 день
-              </S.ChooseBtnParagraph>
-            </S.BtnTextBox>
-          </S.ChooseBtn>
-        </S.ExercisesBox>
+        {data.map((workouts: IWorkout, index: number) => (
+          <ExercisesBox 
+          key={index}
+          text={workouts.name}
+          />
+        ))}
       </S.ProgressFormBox>
     </S.ProgressPageContainer>
   )
