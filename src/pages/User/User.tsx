@@ -8,14 +8,14 @@ import { useAuth } from '../../hooks/useAuth'
 type Props = {}
 
 const User = (props: Props) => {
-  const { user, email, password } = useAuth()
+  const { user, id, email, password } = useAuth()
 
   return (
     <>
       <StyledUser>
         <Header user={user} name={email} />
         <UserList name={email} password={password} />
-        <UserCourses />
+        <UserCourses uid={id} />
       </StyledUser>
     </>
   )
