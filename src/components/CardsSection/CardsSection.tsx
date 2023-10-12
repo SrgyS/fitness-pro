@@ -19,8 +19,6 @@ const CardsSection = () => {
   const { data, isLoading, error } = useGetCourseListQuery({})
   const courseList = useAppSelector(selectorCourseList)
   const dispatch = useAppDispatch()
-  console.log(courseList)
-
   useEffect(() => {
     if (!isLoading && !error) {
       dispatch(setCourseList(data))
@@ -44,9 +42,9 @@ const CardsSection = () => {
             key={index}
             text={card.name}
             imgUrl={require(
-              `../../../src/assets/img/prof-card-${(index + 1) % 5}.png`,
+              `../../../src/assets/img/prof-card-${(index % 5) + 1}.png`,
             )}
-            id={card._id}
+            id={card.id}
             onClick={() => handleCard(card)}
           />
         ))}
