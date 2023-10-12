@@ -36,7 +36,12 @@ const UserMenu = (props: Props) => {
           </NavLink>
         </S.StyledMenuItem>
 
-        <S.StyledMenuItem onClick={() => dispatch(removeUser())}>
+        <S.StyledMenuItem
+          onClick={() => {
+            dispatch(removeUser())
+            localStorage.clear()
+          }}
+        >
           <S.StyledMenuButton>Выйти</S.StyledMenuButton>
         </S.StyledMenuItem>
       </S.StyledUserMenuList>
