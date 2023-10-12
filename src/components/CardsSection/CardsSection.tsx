@@ -74,8 +74,10 @@ const CardsSection = (props: Props) => {
             <Card
               key={index}
               text={card.name}
-              imgUrl={require(`../../../src/assets/img/prof-card-1.png`)}
-              id={card._id}
+              imgUrl={require(
+                `../../../src/assets/img/prof-card-${(index % 5) + 1}.png`,
+              )}
+              id={card.id}
               onClick={() => handleCard(card)}
             />
           ))}
@@ -98,8 +100,10 @@ const CardsSection = (props: Props) => {
             <Card
               key={index}
               text={card.name}
-              imgUrl={require(`../../../src/assets/img/prof-card-1.png`)}
-              id={card._id}
+              imgUrl={require(
+                `../../../src/assets/img/prof-card-${(index % 5) + 1}.png`,
+              )}
+              id={card.id}
               onClick={() => handleCard(card)}
               shadow={true}
             />

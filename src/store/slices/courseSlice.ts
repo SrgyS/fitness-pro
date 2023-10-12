@@ -16,7 +16,10 @@ export const courseSlice = createSlice({
   initialState,
   reducers: {
     setCourseList: (state, action) => {
-      state.courseList = Object.values(action.payload)
+      state.courseList = Object.keys(action.payload).map(key => ({
+        id: key,
+        ...action.payload[key],
+      }))
     },
     setSelectedCourse: (state, action) => {
       state.selectedCourse = action.payload
