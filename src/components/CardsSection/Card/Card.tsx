@@ -12,7 +12,6 @@ interface CardProps {
 
 const Card = ({ text, imgUrl, id, onClick, shadow }: CardProps) => {
   const CardComponent = shadow ? S.CardWithShadow : S.Card
-  console.log('CardShadow:', shadow)
 
   return (
     <Link to={`/about/${id}`}>
