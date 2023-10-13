@@ -4,11 +4,13 @@ import { ICourse } from '../../types'
 interface ICourseStore {
   courseList: ICourse[]
   selectedCourse: ICourse
+  workoutList: ICourse[]
 }
 
 const initialState: ICourseStore = {
   courseList: [],
   selectedCourse: {} as ICourse,
+  workoutList: [],
 }
 
 export const courseSlice = createSlice({
@@ -24,9 +26,16 @@ export const courseSlice = createSlice({
     setSelectedCourse: (state, action) => {
       state.selectedCourse = action.payload
     },
+    setWorkoutList: (state, action) => {
+      state.workoutList = Object.keys(action.payload).map(key => ({
+        id: key,
+        ...action.payload[key],
+      }))
+    },
   },
 })
 
-export const { setCourseList, setSelectedCourse } = courseSlice.actions
+export const { setCourseList, setSelectedCourse, setWorkoutList } =
+  courseSlice.actions
 
 export default courseSlice.reducer

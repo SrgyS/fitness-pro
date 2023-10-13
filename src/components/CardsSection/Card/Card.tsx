@@ -1,6 +1,7 @@
 import React from 'react'
 import * as S from './Card.styles'
 import { Link } from 'react-router-dom'
+import { BigButtonUser } from '../../Buttons/MainButtons/Button.styles'
 
 interface CardProps {
   text: string
@@ -11,15 +12,25 @@ interface CardProps {
 }
 
 const Card = ({ text, imgUrl, id, onClick, shadow }: CardProps) => {
-  const CardComponent = shadow ? S.CardWithShadow : S.Card
-  console.log('CardShadow:', shadow)
-
   return (
-    <Link to={`/about/${id}`}>
-      <CardComponent $imgUrl={imgUrl} onClick={onClick}>
-        <span>{text}</span>
-      </CardComponent>
-    </Link>
+    <>
+      {!shadow && (
+        <Link to={`/about/${id}`}>
+          <S.Card $imgUrl={imgUrl} onClick={onClick}>
+            <span>{text}</span>
+          </S.Card>
+        </Link>
+      )}
+
+      {shadow && (
+        <Link to="/exercises">
+          <S.CardWithShadow onClick={onClick} $imgUrl={imgUrl}>
+            <span>{text}</span>
+            <BigButtonUser>Перейти &rarr;</BigButtonUser>
+          </S.CardWithShadow>
+        </Link>
+      )}
+    </>
   )
 }
 
