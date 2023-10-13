@@ -22,3 +22,8 @@ export interface IFormProps {
   buttonText: string
   errorMessage?: string
 }
+export interface ICourseData {
+  [courseId: string]: {
+    [key: string]: string
+  }
+}

@@ -3,6 +3,7 @@ import * as S from './Auth.styles'
 import Logo from '../../components/Logo/Logo'
 import { IFormData } from '../../types'
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
+import { getDatabase, ref, set } from 'firebase/database'
 import { setUser } from '../../store/slices/userSlice'
 import { useAppDispatch } from '../../hooks/reduxHooks'
 import { useNavigate } from 'react-router-dom'
@@ -28,6 +29,15 @@ const Register = (props: Props) => {
       if (user) {
         const token = await user.getIdToken()
         console.log(user)
+
+        const db = getDatabase()
+        const userRef = ref(db, 'users/' + user.uid)
+        const userData = {
+          email: user.email,
+          id: user.uid,
+        }
+        await set(userRef, userData)
+
         dispatch(
           setUser({
             email: user.email,

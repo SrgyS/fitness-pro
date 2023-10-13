@@ -30,3 +30,8 @@ export const Card = styled.div<styledCardProps>`
     width: 300px;
   height: 400px;
 `
+export const CardWithShadow = styled(Card)`
+  box-shadow:
+    -10px 5px 15px rgba(217, 217, 217, 1),
+    10px -5px 15px rgba(217, 217, 217, 1);
+`

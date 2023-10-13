@@ -7,15 +7,17 @@ interface CardProps {
   imgUrl: string
   id?: string
   onClick: () => void
+  shadow?: boolean
 }
 
-const Card = ({ text, imgUrl, id, onClick }: CardProps) => {
-  console.log(text, imgUrl, id)
+const Card = ({ text, imgUrl, id, onClick, shadow }: CardProps) => {
+  const CardComponent = shadow ? S.CardWithShadow : S.Card
+
   return (
     <Link to={`/about/${id}`}>
-      <S.Card $imgUrl={imgUrl} onClick={onClick}>
+      <CardComponent $imgUrl={imgUrl} onClick={onClick}>
         <span>{text}</span>
-      </S.Card>
+      </CardComponent>
     </Link>
   )
 }
