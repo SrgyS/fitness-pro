@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import * as S from './UserCourses.Styles'
+import React from 'react'
 import CardsSection from '../../components/CardsSection/CardsSection'
 // import { getDatabase, ref, get } from 'firebase/database'
 // import { ICourseData } from '../../types'
