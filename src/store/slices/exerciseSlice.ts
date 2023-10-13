@@ -16,7 +16,7 @@ export const workoutSlice = createSlice({
   initialState,
   reducers: {
     setWorkoutList: (state, action) => {
-      state.workoutList = Object.values(action.payload)
+      state.workoutList = action.payload
     },
     setSelectedWorkout: (state, action) => {
       state.selectedWorkout = action.payload

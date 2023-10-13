@@ -1,13 +1,13 @@
 import * as S from './Exercises.styled'
 
-interface ExercisesProps {
-    text: string
-    // imgUrl: string
-    // id?: string
-    // onClick: () => void
-  }
+// interface ExercisesProps {
+//     text: string
+//     // imgUrl: string
+//     // id?: string
+//     // onClick: () => void
+//   }
 
-const ExercisesBox = ({ text }: ExercisesProps) => {
+const ExercisesBox = () => {
     return (
         <S.ExercisesBox>
         <S.ChooseBtn>

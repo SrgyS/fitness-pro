@@ -1,4 +1,4 @@
 import { RootState } from '../../store'
 
-export const selectorWorkoutList = (state: RootState) => state.courses.workoutList
-export const selectorSelectedWorkout = (state: RootState) => state.courses.selectedWorkout
+export const selectorWorkoutList = (state: any) => state.workout.workoutList
+export const selectorSelectedWorkout = (state: any) => state.workout.selectedWorkout
