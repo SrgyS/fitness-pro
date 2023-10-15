@@ -12,7 +12,13 @@ export const courseListApi = createApi({
         url: '/courses.json',
       }),
     }),
+
+    getWorkoutList: builder.query({
+      query: () => ({
+        url: '/workout.json',
+      }),
+    }),
   }),
 })
 
-export const { useGetCourseListQuery } = courseListApi
+export const { useGetCourseListQuery, useGetWorkoutListQuery } = courseListApi

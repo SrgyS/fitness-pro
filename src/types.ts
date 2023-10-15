@@ -4,6 +4,7 @@ export interface ICourse {
   desires: string[]
   directions: string[]
   description: string
+  workout: string[]
 }
 
 export interface IFormField {
@@ -26,4 +27,11 @@ export interface ICourseData {
   [courseId: string]: {
     [key: string]: string
   }
+}
+export interface IWorkout {
+  id: string
+  author: string
+  course: string
+  name: string[]
+  number: string
 }

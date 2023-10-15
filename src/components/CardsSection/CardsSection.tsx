@@ -20,6 +20,7 @@ type Props = { uid: string }
 
 const CardsSection = (props: Props) => {
   const { data, isLoading, error } = useGetCourseListQuery({})
+
   const courseList = useAppSelector(selectorCourseList)
   const dispatch = useAppDispatch()
 
@@ -52,7 +53,6 @@ const CardsSection = (props: Props) => {
 
   const availableCourses = userCourses.map(courseId => data[courseId])
 
-
   useEffect(() => {
     if (!isLoading && !error) {
       dispatch(setCourseList(data))
@@ -62,7 +62,6 @@ const CardsSection = (props: Props) => {
   const handleCard = (card: ICourse) => {
     dispatch(setSelectedCourse(card))
   }
-
 
   if (location.pathname === '/') {
     return (
@@ -99,50 +98,28 @@ const CardsSection = (props: Props) => {
           </S.StyledError>
         )}
         <S.CardsWrapper>
-          {availableCourses.map((card: ICourse, index: number) => (
-            <Card
-              key={index}
-              text={card.name}
-              imgUrl={require(
-                `../../../src/assets/img/prof-card-${(index % 5) + 1}.png`,
-              )}
-              id={card.id}
-              onClick={() => handleCard(card)}
-              shadow={true}
-            />
-          ))}
+          {availableCourses.length > 0 ? (
+            availableCourses.map((card: ICourse, index: number) => (
+              <Card
+                key={index}
+                text={card.name}
+                imgUrl={require(
+                  `../../../src/assets/img/prof-card-${(index % 5) + 1}.png`,
+                )}
+                id={card.id}
+                onClick={() => handleCard(card)}
+                shadow={true}
+              />
+            ))
+          ) : (
+            <div>Нет доступных курсов.</div>
+          )}
         </S.CardsWrapper>
       </S.CardsSection>
     )
   } else {
     return <p>Нет доступных курсов</p>
   }
-
-  return (
-    <S.CardsSection>
-      {error && (
-        <S.StyledError>
-          Что-то пошло не так, проверьте подключение к интернету!
-        </S.StyledError>
-      )}
-      <S.CardsWrapper>
-        {courseList.map((card: ICourse, index: number) => (
-          <Card
-            key={index}
-            text={card.name}
-            imgUrl={require(
-              `../../../src/assets/img/prof-card-${(index % 5) + 1}.png`,
-            )}
-            id={card.id}
-            onClick={() => handleCard(card)}
-          />
-        ))}
-      </S.CardsWrapper>
-      {!error && (
-        <BigButtonMain onClick={scrollToTop}>Наверх &uarr;</BigButtonMain>
-      )}
-    </S.CardsSection>
-  )
 }
 
 export default CardsSection
