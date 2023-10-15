@@ -24,6 +24,8 @@ const CardsSection = (props: Props) => {
   const dispatch = useAppDispatch()
 
   const courseList = useAppSelector(selectorCourseList)
+  const dispatch = useAppDispatch()
+
   console.log(courseList)
 
   const { uid } = props
@@ -51,6 +53,8 @@ const CardsSection = (props: Props) => {
       })
   }, [uid])
 
+  const availableCourses = userCourses.map(courseId => data[courseId])
+
   useEffect(() => {
     if (!isLoading && !error) {
       dispatch(setCourseList(data))
@@ -60,7 +64,7 @@ const CardsSection = (props: Props) => {
   const handleCard = (card: ICourse) => {
     dispatch(setSelectedCourse(card))
   }
-  const availableCourses = userCourses.map(courseId => data[courseId])
+
   if (location.pathname === '/') {
     return (
       <S.CardsSection>
@@ -116,8 +120,34 @@ const CardsSection = (props: Props) => {
       </S.CardsSection>
     )
   } else {
-    return null
+    return <p>Нет доступных курсов</p>
   }
+
+  return (
+    <S.CardsSection>
+      {error && (
+        <S.StyledError>
+          Что-то пошло не так, проверьте подключение к интернету!
+        </S.StyledError>
+      )}
+      <S.CardsWrapper>
+        {courseList.map((card: ICourse, index: number) => (
+          <Card
+            key={index}
+            text={card.name}
+            imgUrl={require(
+              `../../../src/assets/img/prof-card-${(index % 5) + 1}.png`,
+            )}
+            id={card.id}
+            onClick={() => handleCard(card)}
+          />
+        ))}
+      </S.CardsWrapper>
+      {!error && (
+        <BigButtonMain onClick={scrollToTop}>Наверх &uarr;</BigButtonMain>
+      )}
+    </S.CardsSection>
+  )
 }
 
 export default CardsSection
