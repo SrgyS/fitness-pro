@@ -12,6 +12,7 @@ import { selectorCourseList } from '../../store/selectors/courseSelector'
 import { useGetCourseListQuery } from '../../store/services/courseService'
 import { getDatabase, ref, get } from 'firebase/database'
 import { useLocation } from 'react-router-dom'
+import ExercisesModal from '../../pages/Exercises/ExercisesForm'
 
 const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -31,6 +32,9 @@ const CardsSection = (props: Props) => {
 
   //-----Получаем список курсов доступных юзеру-----//
   const [userCourses, setUserCourses] = useState<string[]>([])
+
+  //----Стейт для поп-ап меню тренировок----//
+  const [modalActive, setModalActive] = useState(false)
 
   useEffect(() => {
     const userRef = ref(getDatabase(), `users/${uid}`)
@@ -81,6 +85,7 @@ const CardsSection = (props: Props) => {
               )}
               id={card.id}
               onClick={() => handleCard(card)}
+              onClickPopUp={() => setModalActive(true)}
             />
           ))}
         </S.CardsWrapper>
@@ -109,12 +114,14 @@ const CardsSection = (props: Props) => {
                 id={card.id}
                 onClick={() => handleCard(card)}
                 shadow={true}
+                onClickPopUp={() => setModalActive(true)}
               />
             ))
           ) : (
             <div>Нет доступных курсов.</div>
           )}
         </S.CardsWrapper>
+        <ExercisesModal active={modalActive} setActive={setModalActive}/>
       </S.CardsSection>
     )
   } else {

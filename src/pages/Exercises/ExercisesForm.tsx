@@ -7,12 +7,11 @@ import {
   selectorSelectedCourse,
   selectorWorkoutList,
 } from '../../store/selectors/courseSelector'
-import { IWorkout } from '../../types'
+import { IPopupMenuContext, IWorkout } from '../../types'
 
-type Props = {}
-
-const Exercises = (props: Props) => {
+const ExercisesModal = ({active, setActive}: IPopupMenuContext) => {
   const [courseWorkouts, setCourseWorkouts] = useState<IWorkout[]>([])
+console.log(courseWorkouts)
 
   const {
     data: workoutData,
@@ -36,8 +35,8 @@ const Exercises = (props: Props) => {
 
   console.log('workouts', courseWorkouts)
   return (
-    <S.ProgressPageContainer>
-      <S.ProgressFormBox>
+    <S.ProgressPageContainer className={active ? "active" : ""} onClick={() => setActive(false)}>
+      <S.ProgressFormBox onClick={e => e.stopPropagation()}> 
         <S.ProgressHeader>Выберите тренировку</S.ProgressHeader>
         <S.ExercisesBox>
           {
@@ -45,8 +44,8 @@ const Exercises = (props: Props) => {
               return (
                 <S.ChooseBtn key={workout.id}>
                   <S.BtnTextBox>
-                    <S.ChooseBtnHeader>{workout.id}</S.ChooseBtnHeader>
-                    <S.ChooseBtnParagraph>{workout.id}</S.ChooseBtnParagraph>
+                    <S.ChooseBtnHeader>{workout.name}</S.ChooseBtnHeader>
+                    <S.ChooseBtnParagraph>{workout.course} / день {workout.number}</S.ChooseBtnParagraph>
                   </S.BtnTextBox>
                 </S.ChooseBtn>
               )
@@ -114,4 +113,4 @@ const Exercises = (props: Props) => {
   )
 }
 
-export default Exercises
+export default ExercisesModal

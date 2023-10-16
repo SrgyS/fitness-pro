@@ -9,9 +9,10 @@ interface CardProps {
   id?: string
   onClick: () => void
   shadow?: boolean
+  onClickPopUp: () => void
 }
 
-const Card = ({ text, imgUrl, id, onClick, shadow }: CardProps) => {
+const Card = ({ text, imgUrl, id, onClick, onClickPopUp, shadow }: CardProps) => {
   return (
     <>
       {!shadow && (
@@ -23,12 +24,12 @@ const Card = ({ text, imgUrl, id, onClick, shadow }: CardProps) => {
       )}
 
       {shadow && (
-        <Link to="/exercises">
+        // <Link to="/exercises">
           <S.CardWithShadow onClick={onClick} $imgUrl={imgUrl}>
             <span>{text}</span>
-            <BigButtonUser>Перейти &rarr;</BigButtonUser>
+            <BigButtonUser onClick={onClickPopUp}>Перейти &rarr;</BigButtonUser>
           </S.CardWithShadow>
-        </Link>
+        // </Link>
       )}
     </>
   )
