@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react"
+
 export interface ICourse {
   id: string
   name: string
@@ -6,6 +8,12 @@ export interface ICourse {
   description: string
   workout: string[]
 }
+
+export interface IPopupMenuContext {
+  active: boolean;
+  setActive: Dispatch<SetStateAction<boolean>>;
+}
+
 
 export interface IFormField {
   type: string
