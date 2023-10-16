@@ -3,14 +3,16 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks/useAppHook'
 import { useGetWorkoutListQuery } from '../../store/services/courseService'
 import { setWorkoutList, setLessonData } from '../../store/slices/courseSlice'
 import * as S from './Exercises.styled'
-import { selectorSelectedCourse } from '../../store/selectors/courseSelector'
-import { IWorkout } from '../../types'
+import {
+  selectorSelectedCourse,
+  selectorWorkoutList,
+} from '../../store/selectors/courseSelector'
+import { IPopupMenuContext, IWorkout } from '../../types'
 import { Link } from 'react-router-dom'
 
-type Props = {}
-
-const Exercises = (props: Props) => {
+const ExercisesModal = ({ active, setActive }: IPopupMenuContext) => {
   const [courseWorkouts, setCourseWorkouts] = useState<IWorkout[]>([])
+  console.log(courseWorkouts)
 
   const { data, isLoading, error } = useGetWorkoutListQuery({})
 
@@ -34,8 +36,11 @@ const Exercises = (props: Props) => {
 
   console.log('workouts', courseWorkouts)
   return (
-    <S.ProgressPageContainer>
-      <S.ProgressFormBox>
+    <S.ProgressPageContainer
+      className={active ? 'active' : ''}
+      onClick={() => setActive(false)}
+    >
+      <S.ProgressFormBox onClick={e => e.stopPropagation()}>
         <S.ProgressHeader>Выберите тренировку</S.ProgressHeader>
         <S.ExercisesBox>
           {courseWorkouts.map((workout, index) => {
@@ -45,7 +50,7 @@ const Exercises = (props: Props) => {
                   <S.BtnTextBox>
                     <S.ChooseBtnHeader>{workout.name}</S.ChooseBtnHeader>
                     <S.ChooseBtnParagraph>
-                      {workout.course} / {workout.number} день
+                      {workout.course} / день {workout.number}
                     </S.ChooseBtnParagraph>
                   </S.BtnTextBox>
                 </S.ChooseBtn>
@@ -58,4 +63,4 @@ const Exercises = (props: Props) => {
   )
 }
 
-export default Exercises
+export default ExercisesModal
