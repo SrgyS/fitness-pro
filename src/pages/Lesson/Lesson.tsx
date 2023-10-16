@@ -1,17 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import * as S from './Lesson.style'
 import { Button } from '../../components/Button/Button.style'
 import Header from '../../components/Header/Header'
 import { StyledMain } from '../Main/Main.styles'
 import Image from '../../assets/img/temp-for-video.jpg'
 import ExerciseProgress from '../../components/ProgressBar/ProgressBar'
+import { useAuth } from '../../hooks/useAuth'
+import { useParams } from 'react-router-dom'
 
 type Props = {}
 
 const Lesson = (props: Props) => {
+  const { user, email } = useAuth()
+  const { lessonId } = useParams()
+  const [lessonData, setLessonData] = useState({})
+
+  useEffect(() => {
+    console.log('lessonId', lessonId)
+  }, [])
+
   return (
     <StyledMain style={{ backgroundColor: '#FAFAFA', height: '100%' }}>
-      <Header />
+      <Header user={user} name={email} />
       <S.LessonContent>
         <S.LessonTitle> Йога</S.LessonTitle>
         <S.LessonPath>

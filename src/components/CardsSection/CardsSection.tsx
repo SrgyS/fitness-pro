@@ -21,10 +21,10 @@ type Props = { uid: string }
 const CardsSection = (props: Props) => {
   const { data, isLoading, error } = useGetCourseListQuery({})
 
+  const [availableCourses, setAvailableCourses] = useState<ICourse[]>([])
+
   const courseList = useAppSelector(selectorCourseList)
   const dispatch = useAppDispatch()
-
-  console.log(courseList)
 
   const { uid } = props
   const location = useLocation()
@@ -33,15 +33,14 @@ const CardsSection = (props: Props) => {
   const [userCourses, setUserCourses] = useState<string[]>([])
 
   useEffect(() => {
-    const userRef = ref(getDatabase(), `users/${uid}`)
-    console.log('userId:', uid)
+    const userCoursesRef = ref(getDatabase(), `users/${uid}/courses`)
 
-    get(userRef)
+    get(userCoursesRef)
       .then(snapshot => {
         if (snapshot.exists()) {
-          const userData = snapshot.val()
-          setUserCourses(userData.courses || [])
-          console.log('userCourses2', userData.courses)
+          const userCoursesList = snapshot.val()
+          setUserCourses(userCoursesList || [])
+          console.log('userCourses2', userCoursesList)
         } else {
           setUserCourses([])
         }
@@ -51,13 +50,19 @@ const CardsSection = (props: Props) => {
       })
   }, [uid])
 
-  const availableCourses = userCourses.map(courseId => data[courseId])
-
   useEffect(() => {
     if (!isLoading && !error) {
       dispatch(setCourseList(data))
     }
   }, [data, error, isLoading, dispatch])
+
+  useEffect(() => {
+    // Фильтрация курсов доступных пользователю
+    const filteredCourses = courseList.filter(course =>
+      userCourses.includes(course.id.trim()),
+    )
+    setAvailableCourses(filteredCourses)
+  }, [courseList, userCourses])
 
   const handleCard = (card: ICourse) => {
     dispatch(setSelectedCourse(card))
