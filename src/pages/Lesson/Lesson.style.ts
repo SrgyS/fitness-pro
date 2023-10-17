@@ -14,7 +14,10 @@ export const LessonVideoSection = styled.div`
   margin-top: 40px;
 `
 
-export const LessonVideo = styled.div``
+export const LessonVideo = styled.iframe`
+  width: -webkit-fill-available;
+  height: 720px;
+`
 
 export const LessonDescription = styled.div`
   margin-top: 75px;
@@ -91,7 +94,7 @@ export const ExerciseCompletion = styled.span`
 export const ExercisesDone = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 27px;
+  gap: 36px;
   width: 50%;
 `
 export const ExerciseName = styled.p`

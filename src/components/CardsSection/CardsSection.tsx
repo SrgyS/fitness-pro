@@ -6,9 +6,10 @@ import { ICourse } from '../../types'
 import { useAppDispatch, useAppSelector } from '../../store/hooks/useAppHook'
 import {
   setCourseList,
+  setPracticeProgress,
   setSelectedCourse,
 } from '../../store/slices/courseSlice'
-import { selectorCourseList } from '../../store/selectors/courseSelector'
+import { selectorCourseList, selectorProgress } from '../../store/selectors/courseSelector'
 import { useGetCourseListQuery } from '../../store/services/courseService'
 import { getDatabase, ref, get } from 'firebase/database'
 import { useLocation } from 'react-router-dom'
@@ -21,7 +22,8 @@ type Props = { uid: string }
 
 const CardsSection = (props: Props) => {
   const { data, isLoading, error } = useGetCourseListQuery({})
-
+  const progress = useAppSelector(selectorProgress)
+  console.log("progressFromCardSection", progress)
   const courseList = useAppSelector(selectorCourseList)
   const dispatch = useAppDispatch()
 
@@ -32,7 +34,7 @@ const CardsSection = (props: Props) => {
 
   //-----Получаем список курсов доступных юзеру-----//
   const [userCourses, setUserCourses] = useState<string[]>([])
-
+  console.log('userCourses', userCourses)
   //----Стейт для поп-ап меню тренировок----//
   const [modalActive, setModalActive] = useState(false)
 
@@ -45,7 +47,10 @@ const CardsSection = (props: Props) => {
         if (snapshot.exists()) {
           const userData = snapshot.val()
           setUserCourses(userData.courses || [])
-          console.log('userCourses2', userData.courses)
+          dispatch(setPracticeProgress(userData.workouts || {}))
+
+          console.log('userData.workouts', userData.workouts)
+          console.log('test', userData.workouts['-NgCovDPCHMVgtwSeDa9']['0'])
         } else {
           setUserCourses([])
         }
@@ -55,7 +60,10 @@ const CardsSection = (props: Props) => {
       })
   }, [uid])
 
-  const availableCourses = userCourses.map(courseId => data[courseId])
+  const availableCourses = userCourses.map(courseId => ({
+    ...data[courseId],
+    id: courseId,
+  }))
 
   useEffect(() => {
     if (!isLoading && !error) {
@@ -66,7 +74,7 @@ const CardsSection = (props: Props) => {
   const handleCard = (card: ICourse) => {
     dispatch(setSelectedCourse(card))
   }
-
+  console.log('availableCourses', availableCourses)
   if (location.pathname === '/') {
     return (
       <S.CardsSection>
@@ -121,7 +129,7 @@ const CardsSection = (props: Props) => {
             <div>Нет доступных курсов.</div>
           )}
         </S.CardsWrapper>
-        <ExercisesModal active={modalActive} setActive={setModalActive}/>
+        <ExercisesModal active={modalActive} setActive={setModalActive} />
       </S.CardsSection>
     )
   } else {

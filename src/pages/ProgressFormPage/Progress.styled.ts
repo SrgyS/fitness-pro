@@ -25,7 +25,7 @@ export const ProgressHeader = styled.h2`
   margin-top: 36px;
 `
 
-export const ProgressFormBox = styled.div`
+export const ProgressFormBox = styled.form`
   background-color: #ffffff;
   width: 444px;
   height: 554px;
@@ -75,7 +75,7 @@ export const SendButton = styled.button`
   }
 `
 
-export const Description = styled.p`
+export const Description = styled.label`
   font-size: 18px;
   font-weight: 400;
 `

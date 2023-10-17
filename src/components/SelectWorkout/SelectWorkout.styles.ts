@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const SelectWorkoutContainer = styled.div`
   width: 444px;
-  heigth: 626px;
+  height: 626px;
   border-radius: 12px;
   background: #fff;
 `

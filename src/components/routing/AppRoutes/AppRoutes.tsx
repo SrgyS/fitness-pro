@@ -17,6 +17,7 @@ import { useAuth } from '../../../hooks/useAuth'
 
 function AppRoutes() {
   const { user } = useAuth()
+  console.log("user", user)
   return (
     <Routes>
       <Route path="/" element={<Main />} />

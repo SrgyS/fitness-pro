@@ -6,7 +6,7 @@ type Props = { uid: string }
 
 const UserCourses = (props: Props) => {
   const { uid } = props
-
+console.log("uid", uid)
   // const [userCourses, setUserCourses] = useState<string[]>([])
   // const [allCourses, setAllCourses] = useState<ICourseData>({})
 
