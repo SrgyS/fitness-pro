@@ -33,6 +33,7 @@ const CardsSection = (props: Props) => {
 
   //-----Получаем список курсов доступных юзеру-----//
   const [userCourses, setUserCourses] = useState<string[]>([])
+  const [isLoadingUserCourses, setIsLoadingUserCourses] = useState(false)
 
   //----Стейт для поп-ап меню тренировок----//
   const [modalActive, setModalActive] = useState(false)
@@ -41,6 +42,7 @@ const CardsSection = (props: Props) => {
     const userRef = ref(getDatabase(), `users/${uid}`)
     console.log('userId:', uid)
 
+    setIsLoadingUserCourses(true)
     get(userRef)
       .then(snapshot => {
         if (snapshot.exists()) {
@@ -54,6 +56,7 @@ const CardsSection = (props: Props) => {
       .catch(error => {
         console.error('Ошибка при получении данных пользователя:', error)
       })
+      .finally(() => setIsLoadingUserCourses(false))
   }, [uid])
 
   const availableCourses = userCourses.map(courseId => data[courseId])
@@ -64,7 +67,7 @@ const CardsSection = (props: Props) => {
     }
   }, [data, error, isLoading, dispatch])
 
-  if (isLoading) {
+  if (isLoading || isLoadingUserCourses) {
     return <SkeletonCardCourse />
   }
 

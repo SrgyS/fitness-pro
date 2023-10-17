@@ -13,6 +13,8 @@ export const SkeletonCardCourse: FC = () => {
             height={480}
             backgroundColor="#f0f0f0"
             foregroundColor="#dedede"
+            style={{ marginTop: '40px' }}
+            viewBox="0 0 360 480"
           >
             <rect x="0" y="0" rx="10" ry="10" width="360" height="480" />
           </ContentLoader>
