@@ -17,6 +17,7 @@ export const ExerciseProgress = styled.div<ExerciseProgressProps>`
 `
 
 export const ExerciseCompletion = styled.div<ExerciseCompletionProps>`
+  max-width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;

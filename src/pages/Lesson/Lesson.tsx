@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import * as S from './Lesson.style'
 import { Button } from '../../components/Button/Button.style'
 import Header from '../../components/Header/Header'
@@ -11,6 +11,9 @@ import {
   selectorWorkoutList,
 } from '../../store/selectors/courseSelector'
 import { useNavigate } from 'react-router-dom'
+import TrainProgress from '../ProgressFormPage/ProgressForm'
+import { updateProgress } from '../../api/coursesApi'
+import { selectorUserId } from '../../store/selectors/userSelector'
 
 type Props = {}
 
@@ -18,14 +21,26 @@ const Lesson = (props: Props) => {
   const navigate = useNavigate()
   const progress = useAppSelector(selectorProgress)
   const selectedWorkout = useAppSelector(selectorSelectedWorkout)
+  const [modalOpen, setModalOpen] = useState(false)
   console.log('selectedWorkout', selectedWorkout)
   const selectedWorkoutList = useAppSelector(selectorWorkoutList)
   console.log('selectedWorkoutList', selectedWorkoutList)
   const workout = useMemo(() => {
     return selectedWorkoutList.find(el => el.id === selectedWorkout)
   }, [selectedWorkout, selectedWorkoutList])
-  console.log('workout', workout)
+
+  const handleModalOpen = () => setModalOpen(prev => !prev)
   console.log('progress', progress)
+  const userId = useAppSelector(selectorUserId)
+  console.log('userID', userId)
+  const handleUpdate = (changes: { [key: number]: number }) => {
+
+    if (workout?.id)
+      updateProgress(userId, workout?.id, {
+        ...progress[workout?.id],
+        ...changes,
+      }).then(()=>{handleModalOpen()})
+  }
   return (
     <StyledMain style={{ backgroundColor: '#FAFAFA', height: '100%' }}>
       <Header />
@@ -56,7 +71,10 @@ const Lesson = (props: Props) => {
                   })}
                 </S.ExercisesList>
               </S.Exercises>
-              <Button style={{ marginTop: '40px', marginBottom: '46px' }}>
+              <Button
+                style={{ marginTop: '40px', marginBottom: '46px' }}
+                onClick={handleModalOpen}
+              >
                 Заполнить свой прогресс
               </Button>
             </S.LessonExercises>
@@ -90,6 +108,13 @@ const Lesson = (props: Props) => {
             </S.LessonProgress>
           </S.LessonDescription>
         )}
+        <TrainProgress
+          open={modalOpen}
+          handleOpen={handleModalOpen}
+          workoutId={workout?.id || ''}
+          practice={workout?.practice || []}
+          handleUpdate = {handleUpdate}
+        />
       </S.LessonContent>
     </StyledMain>
   )

@@ -2,37 +2,59 @@ import { useState } from 'react'
 import * as S from './Progress.styled'
 import { IPractice } from '../../types'
 
+type Props = {
+  practice: IPractice[]
+  workoutId: string
+  open: boolean
+  handleOpen: () => void
+  handleUpdate: (changes: IExercisesDone) => void
+}
 
-type Props = {practice: IPractice[], workoutId: string}
+export interface IExercisesDone {
+  [key: string]: number
+}
 
 const TrainProgress = (props: Props) => {
-  const [exercisesDone, setExercisesDone] = useState({})
+  const [exercisesDone, setExercisesDone] = useState<IExercisesDone>({})
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const practiceId = e.target.name
-    const practiceDone = e.target.value
+    const practiceDone = Number(e.target.value)
     setExercisesDone(prev => ({ ...prev, [practiceId]: practiceDone }))
+  }
+  console.log('propsPractice', props.practice)
+
+  const handleClick = () => {
+    props.handleUpdate(exercisesDone)
   }
 
   return (
-    <S.ProgressPageContainer>
-      <S.ProgressFormBox>
+    <S.ProgressPageContainer
+      onClick={props.handleOpen}
+      className={props.open ? 'active' : ''}
+    >
+      <S.ProgressFormBox
+        onSubmit={e => {
+          e.preventDefault()
+        }}
+        onClick={e => e.stopPropagation()}
+      >
         <S.ProgressHeader>Мой прогресс</S.ProgressHeader>
         <S.Inputs>
-          {props.practice.map((item, index) => {
+          {props.practice?.map(item => (
             <>
               <S.Description>
                 Сколько раз вы сделали {item?.name}?
               </S.Description>
               <S.ExerciseInput
-                name={item.name}
-                value={exercisesDone[index]}
+                name={item.id}
+                value={exercisesDone[item.id] || 0}
                 placeholder="Введите значение"
-                onChange={handleChange}
+                onInput={handleChange}
               />
             </>
-          })}
+          ))}
         </S.Inputs>
-        <S.SendButton type="submit">Отправить</S.SendButton>
+        <S.SendButton onClick={handleClick}>Отправить</S.SendButton>
       </S.ProgressFormBox>
     </S.ProgressPageContainer>
   )

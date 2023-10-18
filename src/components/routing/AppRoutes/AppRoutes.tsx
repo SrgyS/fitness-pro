@@ -17,7 +17,7 @@ import { useAuth } from '../../../hooks/useAuth'
 
 function AppRoutes() {
   const { user } = useAuth()
-  console.log("user", user)
+  console.log('user', user)
   return (
     <Routes>
       <Route path="/" element={<Main />} />
@@ -27,7 +27,6 @@ function AppRoutes() {
       <Route element={<ProtectedRoute isAllowed={Boolean(user)} />}>
         <Route path="/user" element={<User />} />
         <Route path="/lesson" element={<Lesson />} />
-        <Route path="/progress" element={<TrainProgress />} />
         <Route path="/change/password" element={<ChangePassword />} />
         <Route path="/change/login" element={<ChangeLogin />} />
         {/* <Route path="/exercises" element={<Exercises />} /> */}
