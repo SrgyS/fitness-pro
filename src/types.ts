@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction } from 'react'
 
 export interface ICourse {
   id: string
@@ -10,10 +10,9 @@ export interface ICourse {
 }
 
 export interface IPopupMenuContext {
-  active: boolean;
-  setActive: Dispatch<SetStateAction<boolean>>;
+  active: boolean
+  setActive: Dispatch<SetStateAction<boolean>>
 }
-
 
 export interface IFormField {
   type: string
@@ -42,4 +41,12 @@ export interface IWorkout {
   course: string
   name: string[]
   number: string
+  video: string
+  practice: IPractice[]
+}
+
+export interface IPractice {
+  id: string
+  name: string
+  amount: number
 }
