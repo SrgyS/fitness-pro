@@ -39,21 +39,18 @@ const TrainProgress = (props: Props) => {
         onClick={e => e.stopPropagation()}
       >
         <S.ProgressHeader>Мой прогресс</S.ProgressHeader>
-        <S.Inputs>
-          {props.practice?.map(item => (
-            <>
-              <S.Description>
-                Сколько раз вы сделали {item?.name}?
-              </S.Description>
-              <S.ExerciseInput
-                name={item.id}
-                value={exercisesDone[item.id] || 0}
-                placeholder="Введите значение"
-                onInput={handleChange}
-              />
-            </>
-          ))}
-        </S.Inputs>
+        {props.practice?.map((item, index) => (
+          <S.Inputs key={index}>
+            <S.Description>Сколько раз вы сделали {item?.name}?</S.Description>
+            <S.ExerciseInput
+              name={item.id}
+              value={exercisesDone[item.id] || 0}
+              placeholder="Введите значение"
+              onInput={handleChange}
+            />
+          </S.Inputs>
+        ))}
+
         <S.SendButton onClick={handleClick}>Отправить</S.SendButton>
       </S.ProgressFormBox>
     </S.ProgressPageContainer>

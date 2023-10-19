@@ -12,7 +12,19 @@ interface CardProps {
   onClickPopUp: () => void
 }
 
-const Card = ({ text, imgUrl, id, onClick, onClickPopUp, shadow }: CardProps) => {
+const Card = ({
+  text,
+  imgUrl,
+  id,
+  onClick,
+  onClickPopUp,
+  shadow,
+}: CardProps) => {
+  const handleBothClicks = () => {
+    onClick()
+    onClickPopUp()
+  }
+
   return (
     <>
       {!shadow && (
@@ -24,12 +36,10 @@ const Card = ({ text, imgUrl, id, onClick, onClickPopUp, shadow }: CardProps) =>
       )}
 
       {shadow && (
-        // <Link to="/exercises">
-          <S.CardWithShadow onClick={onClick} $imgUrl={imgUrl}>
-            <span>{text}</span>
-            <BigButtonUser onClick={onClickPopUp}>Перейти &rarr;</BigButtonUser>
-          </S.CardWithShadow>
-        // </Link>
+        <S.CardWithShadow onClick={handleBothClicks} $imgUrl={imgUrl}>
+          <span>{text}</span>
+          <BigButtonUser>Перейти &rarr;</BigButtonUser>
+        </S.CardWithShadow>
       )}
     </>
   )
