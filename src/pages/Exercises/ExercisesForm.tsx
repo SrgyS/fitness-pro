@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../store/hooks/useAppHook'
 import { useGetWorkoutListQuery } from '../../store/services/courseService'
 import {
@@ -8,7 +8,6 @@ import {
 import * as S from './Exercises.styled'
 import {
   selectorSelectedCourse,
-  selectorWorkoutList,
 } from '../../store/selectors/courseSelector'
 import { IPopupMenuContext, IWorkout } from '../../types'
 import { useNavigate } from 'react-router-dom'
@@ -27,8 +26,8 @@ const ExercisesModal = ({ active, setActive }: IPopupMenuContext) => {
   const dispatch = useAppDispatch()
 
   const course = useAppSelector(selectorSelectedCourse)
-  const { workout } = course
 
+const workout = useMemo(() => course?.workout || [], [course])
   const selectWorkout = (id: string) => {
     dispatch(setSelectedWorkout(id))
     navigate('/lesson')
@@ -48,6 +47,8 @@ const ExercisesModal = ({ active, setActive }: IPopupMenuContext) => {
       setCourseWorkouts(workouts)
     }
   }, [workoutData, workoutError, isWorkoutLoading, workout, dispatch])
+
+
 
   console.log('workouts', courseWorkouts)
   return (

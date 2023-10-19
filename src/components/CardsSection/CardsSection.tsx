@@ -14,6 +14,7 @@ import { useGetCourseListQuery } from '../../store/services/courseService'
 import { getDatabase, ref, get } from 'firebase/database'
 import { useLocation } from 'react-router-dom'
 import ExercisesModal from '../../pages/Exercises/ExercisesForm'
+import { SkeletonCardCourse } from './SkeletonCardCourse'
 
 const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -35,6 +36,9 @@ const CardsSection = (props: Props) => {
   //-----Получаем список курсов доступных юзеру-----//
   const [userCourses, setUserCourses] = useState<string[]>([])
   console.log('userCourses', userCourses)
+
+  const [isLoadingUserCourses, setIsLoadingUserCourses] = useState(false)
+
   //----Стейт для поп-ап меню тренировок----//
   const [modalActive, setModalActive] = useState(false)
 
@@ -42,6 +46,7 @@ const CardsSection = (props: Props) => {
     const userRef = ref(getDatabase(), `users/${uid}`)
     console.log('userId:', uid)
 
+    setIsLoadingUserCourses(true)
     get(userRef)
       .then(snapshot => {
         if (snapshot.exists()) {
@@ -58,6 +63,7 @@ const CardsSection = (props: Props) => {
       .catch(error => {
         console.error('Ошибка при получении данных пользователя:', error)
       })
+      .finally(() => setIsLoadingUserCourses(false))
   }, [uid])
 
   const availableCourses = userCourses.map(courseId => ({
@@ -70,6 +76,10 @@ const CardsSection = (props: Props) => {
       dispatch(setCourseList(data))
     }
   }, [data, error, isLoading, dispatch])
+
+  if (isLoading || isLoadingUserCourses) {
+    return <SkeletonCardCourse />
+  }
 
   const handleCard = (card: ICourse) => {
     dispatch(setSelectedCourse(card))
