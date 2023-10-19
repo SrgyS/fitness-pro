@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../store/hooks/useAppHook'
 import { useGetWorkoutListQuery } from '../../store/services/courseService'
 import { setWorkoutList } from '../../store/slices/courseSlice'
@@ -22,7 +22,7 @@ console.log(courseWorkouts)
   const dispatch = useAppDispatch()
 
   const course = useAppSelector(selectorSelectedCourse)
-  const { workout } = course
+  const workout = useMemo(() => course?.workout || [], [course])
   // const workoutList = useAppSelector(selectorWorkoutList)
 
   useEffect(() => {
@@ -32,6 +32,8 @@ console.log(courseWorkouts)
       setCourseWorkouts(workouts)
     }
   }, [workoutData, workoutError, isWorkoutLoading, workout, dispatch])
+
+
 
   console.log('workouts', courseWorkouts)
   return (
