@@ -11,7 +11,6 @@ import Register from '../../../pages/Auth/Register'
 import TrainProgress from '../../../pages/ProgressFormPage/ProgressForm'
 import ChangePassword from '../../../pages/Auth/NewAuthMetasForms/ChangePassword'
 import ChangeLogin from '../../../pages/Auth/NewAuthMetasForms/ChangeLogin'
-import Exercises from '../../../pages/Exercises/ExercisesForm'
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute'
 import { useAuth } from '../../../hooks/useAuth'
 
@@ -25,11 +24,10 @@ function AppRoutes() {
       <Route path="/register" element={<Register />} />
       <Route element={<ProtectedRoute isAllowed={Boolean(user)} />}>
         <Route path="/user" element={<User />} />
-        <Route path="/lesson" element={<Lesson />} />
-        <Route path="/progress" element={<TrainProgress />} />
+        <Route path="/lesson/:id" element={<Lesson />} />
+        <Route path="/progress/:id" element={<TrainProgress />} />
         <Route path="/change/password" element={<ChangePassword />} />
         <Route path="/change/login" element={<ChangeLogin />} />
-        {/* <Route path="/exercises" element={<Exercises />} /> */}
       </Route>
 
       <Route path="*" element={<NotFound />} />

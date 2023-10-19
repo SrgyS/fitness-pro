@@ -21,4 +21,8 @@ export const courseListApi = createApi({
   }),
 })
 
-export const { useGetCourseListQuery, useGetWorkoutListQuery } = courseListApi
+export const {
+  useLazyGetWorkoutListQuery,
+  useGetCourseListQuery,
+  useGetWorkoutListQuery,
+} = courseListApi

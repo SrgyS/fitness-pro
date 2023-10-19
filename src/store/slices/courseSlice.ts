@@ -1,18 +1,25 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { ICourse, IWorkout } from '../../types'
+import {
+  ICourse,
+  IPracticeData,
+  IPracticeDataPayload,
+  IWorkout,
+} from '../../types'
 
 interface ICourseStore {
   courseList: ICourse[]
   selectedCourse: ICourse
-  workoutList: ICourse[]
-  lessonData: IWorkout
+  workoutList: IWorkout[]
+  // lessonData: IWorkout
+  practiceData: Record<string, IPracticeData[]>
 }
 
 const initialState: ICourseStore = {
   courseList: [],
   selectedCourse: {} as ICourse,
   workoutList: [],
-  lessonData: {} as IWorkout,
+  // lessonData: {} as IWorkout,
+  practiceData: {},
 }
 
 export const courseSlice = createSlice({
@@ -34,9 +41,17 @@ export const courseSlice = createSlice({
         ...action.payload[key],
       }))
     },
-    setLessonData: (state, action: PayloadAction<IWorkout>) => {
-      state.lessonData = action.payload
+    setPracticeData: (state, action: PayloadAction<IPracticeDataPayload>) => {
+      const { id, practiceData } = action.payload
+      if (state.practiceData[id]) {
+        state.practiceData[id] = practiceData
+      } else {
+        state.practiceData[id] = practiceData
+      }
     },
+    // setLessonData: (state, action: PayloadAction<IWorkout>) => {
+    //   state.lessonData = action.payload
+    // },
   },
 })
 
@@ -44,7 +59,8 @@ export const {
   setCourseList,
   setSelectedCourse,
   setWorkoutList,
-  setLessonData,
+  // setLessonData,
+  setPracticeData,
 } = courseSlice.actions
 
 export default courseSlice.reducer

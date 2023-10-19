@@ -7,3 +7,6 @@ export const selectorWorkoutList = (state: RootState) =>
 
 export const selectorSelectedCourse = (state: RootState) =>
   state.courses.selectedCourse
+
+export const selectorPracticeData = (state: RootState) =>
+  state.courses.practiceData
