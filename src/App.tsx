@@ -12,7 +12,7 @@ function App() {
     if (user) {
       dispatch(setUser(JSON.parse(user)))
     }
-  })
+  },[])
   return (
     <>
       <GlobalStyle />

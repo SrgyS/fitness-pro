@@ -28,8 +28,6 @@ const CardsSection = (props: Props) => {
   const courseList = useAppSelector(selectorCourseList)
   const dispatch = useAppDispatch()
 
-  console.log(courseList)
-
   const { uid } = props
   const location = useLocation()
 
