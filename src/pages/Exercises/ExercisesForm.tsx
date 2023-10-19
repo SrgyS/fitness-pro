@@ -5,7 +5,6 @@ import { setWorkoutList } from '../../store/slices/courseSlice'
 import * as S from './Exercises.styled'
 import {
   selectorSelectedCourse,
-  selectorWorkoutList,
 } from '../../store/selectors/courseSelector'
 import { IPopupMenuContext, IWorkout } from '../../types'
 
@@ -28,7 +27,7 @@ console.log(courseWorkouts)
   useEffect(() => {
     if (!isWorkoutLoading && !workoutError) {
       dispatch(setWorkoutList(workoutData))
-      const workouts = workout.map(workoutId => workoutData[workoutId])
+      const workouts = workout?.map(workoutId => workoutData[workoutId])
       setCourseWorkouts(workouts)
     }
   }, [workoutData, workoutError, isWorkoutLoading, workout, dispatch])
@@ -42,7 +41,7 @@ console.log(courseWorkouts)
         <S.ProgressHeader>Выберите тренировку</S.ProgressHeader>
         <S.ExercisesBox>
           {
-            courseWorkouts.map(workout => {
+            courseWorkouts?.map(workout => {
               return (
                 <S.ChooseBtn key={workout.id}>
                   <S.BtnTextBox>
