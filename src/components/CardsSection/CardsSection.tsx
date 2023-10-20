@@ -89,7 +89,7 @@ const CardsSection = (props: Props) => {
   const handleCard = (card: ICourse) => {
     dispatch(setSelectedCourse(card))
   }
-  console.log('availableCourses', availableCourses)
+
   if (location.pathname === '/') {
     return (
       <S.CardsSection>

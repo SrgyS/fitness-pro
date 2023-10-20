@@ -12,6 +12,7 @@ import {
 } from '../../store/selectors/courseSelector'
 import { IPopupMenuContext, IWorkout } from '../../types'
 import { useNavigate } from 'react-router-dom'
+import completeUrl from '../../assets/img/done.png'
 
 const ExercisesModal = ({ active, setActive }: IPopupMenuContext) => {
   // const [completedWorkouts, setCompletedWorkouts] = useState<string[]>([])
@@ -55,41 +56,39 @@ const ExercisesModal = ({ active, setActive }: IPopupMenuContext) => {
     }
   }, [workoutData, workoutError, isWorkoutLoading, workout, dispatch])
 
-  // // Создаем пустой объект, который будет содержать ID и массивы значений amount
-  // const completeProgress: { [key: string]: number[] } = {}
+  // Создаем пустой объект, который будет содержать ID и массивы значений amount
+  const completeProgress: { [key: string]: number[] } = {}
 
-  // // Итерируемся по каждому объекту в исходном массиве
-  // courseWorkouts.forEach(item => {
-  //   const id = item.id
-  //   const amountsArray = item.practice.map(exercise => exercise.amount)
-  //   completeProgress[id] = amountsArray
-  // })
+  // Итерируемся по каждому объекту в исходном массиве
+  courseWorkouts.forEach(item => {
+    const id = item.id
+    const amountsArray = item.practice.map(exercise => exercise.amount)
+    completeProgress[id] = amountsArray
+  })
 
-  // console.log('res', completeProgress)
+  console.log('res', completeProgress)
 
-  // const result: string[] = []
+  const completedWorkouts: string[] = []
 
-  // // Итерируемся по ключам (ID) объекта `progress`
-  // for (const id in progress) {
-  //   if (progress.hasOwnProperty(id) && completeProgress[id]) {
-  //     const progressArray = progress[id]
-  //     const completeArray = completeProgress[id]
-  //     console.log('arr2', progressArray, completeArray)
+  // Итерируемся по ключам (ID) объекта `progress`
+  for (const id in progress) {
+    if (progress.hasOwnProperty(id) && completeProgress[id]) {
+      const progressArray = progress[id]
+      const completeArray = completeProgress[id]
 
-  //     if (Array.isArray(progressArray) && Array.isArray(completeArray)) {
-  //       // Проверяем, что значения в `progress` больше или равны значениям в `complete`
-  //       const isComplete = progressArray.every(
-  //         (value, index) => value >= completeArray[index],
-  //       )
-  //       if (isComplete) {
-  //         console.log('id', id)
-  //         result.push(id)
-  //       }
-  //     }
-  //   }
-  // }
+      if (Array.isArray(progressArray) && Array.isArray(completeArray)) {
+        // Проверяем, что значения в `progress` больше или равны значениям в `complete`
+        const isComplete = progressArray.every(
+          (value, index) => value >= completeArray[index],
+        )
+        if (isComplete) {
+          completedWorkouts.push(id)
+        }
+      }
+    }
+  }
 
-  // console.log('completeArr', result)
+  console.log('completeArr', completedWorkouts)
 
   console.log('workouts', courseWorkouts)
   return (
@@ -101,11 +100,22 @@ const ExercisesModal = ({ active, setActive }: IPopupMenuContext) => {
         <S.ProgressHeader>Выберите тренировку</S.ProgressHeader>
         <S.ExercisesBox>
           {courseWorkouts?.map(item => {
+            const isCompleted = completedWorkouts.includes(item?.id)
+            const borderStyle = isCompleted
+              ? { border: '1px solid #06B16E', color: '#06B16E' }
+              : {}
             return (
               <S.ChooseBtn
+                style={borderStyle}
                 key={item?.id}
                 onClick={() => selectWorkout(item?.id)}
               >
+                {isCompleted && (
+                  <S.CompleteImg
+                    src={completeUrl}
+                    alt="complete"
+                  ></S.CompleteImg>
+                )}
                 <S.BtnTextBox>
                   <S.ChooseBtnHeader>{item?.name}</S.ChooseBtnHeader>
                   <S.ChooseBtnParagraph>
