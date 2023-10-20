@@ -13,10 +13,8 @@ import ChangePassword from '../../../pages/Auth/NewAuthMetasForms/ChangePassword
 import ChangeLogin from '../../../pages/Auth/NewAuthMetasForms/ChangeLogin'
 
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute'
-import { useAuth } from '../../../hooks/useAuth'
-
 function AppRoutes() {
-  const { user } = useAuth()
+  const user = localStorage.getItem('user')
 
   return (
     <Routes>

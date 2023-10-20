@@ -31,11 +31,8 @@ const CardsSection = (props: Props) => {
 
   const progress = useAppSelector(selectorProgress)
   console.log('progressFromCardSection', progress)
-
   const courseList = useAppSelector(selectorCourseList)
   const dispatch = useAppDispatch()
-
-  console.log(courseList)
 
   const { uid } = props
   const location = useLocation()
@@ -99,6 +96,7 @@ const CardsSection = (props: Props) => {
 
   const handleCard = (card: ICourse) => {
     dispatch(setSelectedCourse(card))
+    localStorage.setItem('selectedCourse', JSON.stringify(card))
   }
 
   if (location.pathname === '/') {
