@@ -22,7 +22,7 @@ export const ArrowDownIcon = ({ color }: ArrowDownIconProps) => {
         <path
           d="M12.3553 1.03308L6.67773 6.7107L1.00012 1.03308"
           stroke={color}
-          stroke-width="2"
+          strokeWidth="2"
         />
       </svg>
     </ArrowDownIconWrapper>

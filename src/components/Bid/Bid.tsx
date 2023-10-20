@@ -1,7 +1,7 @@
-import React, { FC } from "react";
-import * as S from "./Bid.style";
-import svgUrl from "../../assets/images/bid.svg";
-import { Button } from "../Button/Button.style";
+import React, { FC } from 'react'
+import * as S from './Bid.style'
+import svgUrl from '../../assets/img/bid.svg'
+import { Button } from '../Button/Button.style'
 
 const Bid: FC<{}> = () => {
   return (
@@ -12,11 +12,11 @@ const Bid: FC<{}> = () => {
           выбором направления и тренера, с которым тренировки принесут здоровье
           и радость!
         </p>
-        <Button style={{ marginTop: "46px" }}>Записаться на тренировку</Button>
+        <Button style={{ marginTop: '46px' }}>Записаться на тренировку</Button>
       </S.SignUp>
       <S.BidImg alt="Рука с телефоном" src={svgUrl} />
     </S.BidContainer>
-  );
-};
+  )
+}
 
-export default Bid;
+export default Bid

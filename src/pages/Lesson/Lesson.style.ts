@@ -52,17 +52,19 @@ export const LessonProgress = styled.div`
   background-color: #f2f2f2;
   border-radius: 30px;
   width: 638px;
-  padding-left: 44px;
-  padding-right: 55px;
+
+  padding: 36px 55px 36px 44px;
 `
-export const LessonProgressWrapper = styled.div`
-  margin-top: 36px;
-`
+export const LessonProgressWrapper = styled.div``
 export const LessonProgressTitle = styled.h4`
   display: flex;
   justify-content: center;
   margin-top: 0px;
   margin-bottom: 0px;
+  font-size: 32px;
+
+  font-weight: 400;
+  line-height: 1.25;
 `
 
 export const ProgressContainer = styled.div`

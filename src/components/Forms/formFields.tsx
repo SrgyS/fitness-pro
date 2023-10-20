@@ -54,6 +54,7 @@ export function Form(props: IFormProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setInputsData({ ...inputsData, [name]: value })
+    setError({})
   }
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
