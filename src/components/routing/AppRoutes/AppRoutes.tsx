@@ -8,13 +8,14 @@ import Main from '../../../pages/Main/Main'
 import NotFound from '../../../pages/NotFound/NotFound'
 import CourseDescription from '../../../pages/CourseDescriptionPage/CourseDescriptionPage'
 import Register from '../../../pages/Auth/Register'
-import TrainProgress from '../../../pages/ProgressFormPage/ProgressForm'
+
 import ChangePassword from '../../../pages/Auth/NewAuthMetasForms/ChangePassword'
 import ChangeLogin from '../../../pages/Auth/NewAuthMetasForms/ChangeLogin'
-import Exercises from '../../../pages/Exercises/ExercisesForm'
+
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute'
 function AppRoutes() {
   const user = localStorage.getItem('user')
+
   return (
     <Routes>
       <Route path="/" element={<Main />} />

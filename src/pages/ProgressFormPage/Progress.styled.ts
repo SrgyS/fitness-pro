@@ -67,7 +67,7 @@ export const Inputs = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 5px;
-  overflow-y: scroll;
+
   &::-webkit-scrollbar {
     background: #d9d4d4;
     width: 5px;
@@ -91,6 +91,8 @@ export const SendButton = styled.button`
   line-height: 24px;
   color: white;
   background-color: #580ea2;
+  padding-top: 10px;
+  padding-bottom: 10px;
   &:hover {
     background-color: #3f007d;
   }

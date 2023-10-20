@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../store/hooks/useAppHook'
 import { useGetWorkoutListQuery } from '../../store/services/courseService'
 import {
-  IProgress,
   setSelectedWorkout,
   setWorkoutList,
 } from '../../store/slices/courseSlice'
@@ -66,21 +65,17 @@ const ExercisesModal = ({ active, setActive }: IPopupMenuContext) => {
       setCourseWorkouts(workouts)
     }
   }, [workoutData, workoutError, isWorkoutLoading, workout, dispatch])
-  // Создаем пустой объект, который будет содержать ID и массивы значений amount
-  // const completeProgress: { [key: string]: number[] } = {}
 
-  // Итерируемся по каждому объекту в исходном массиве
-  // courseWorkouts.forEach(item => {
-  //   const id = item.id.trim()
-  //   const amountsArray = item.practice.map(exercise => exercise.amount)
-  //   completeProgress[id] = amountsArray
-  // })
   const completeProgress = useMemo(() => {
     const progress: { [key: string]: number[] } = {}
     courseWorkouts.forEach(item => {
-      const id = item.id.trim()
-      const amountsArray = item.practice.map(exercise => exercise.amount)
-      progress[id] = amountsArray
+      if (item.practice) {
+        const id = item.id.trim()
+        const amountsArray = item.practice.map(exercise => exercise.amount)
+        progress[id] = amountsArray
+      } else {
+        return
+      }
     })
     return progress
   }, [courseWorkouts])

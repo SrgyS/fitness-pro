@@ -37,7 +37,21 @@ const Lesson = (props: Props) => {
     return selectedWorkoutList.find(el => el.id.trim() === selectedWorkout)
   }, [selectedWorkout, selectedWorkoutList])
 
-  const colors = ['#565EEF', '#FF6D00', '#9A48F1']
+  const colors = [
+    'rgba(86, 94, 239)',
+    'rgba(255, 109, 0)',
+    'rgba(154, 72, 241)',
+    'rgba(43, 204, 23)',
+    'rgba(239, 86, 224)',
+  ]
+
+  const bgColors = [
+    'rgba(86, 94, 239, 0.1)',
+    'rgba(255, 109, 0, 0.1)',
+    'rgba(154, 72, 241, 0.1)',
+    'rgba(43, 204, 23, 0.1)',
+    'rgba(239, 86, 224, 0.1)',
+  ]
 
   const handleModalOpen = () => setModalOpen(prev => !prev)
   console.log('progress', progress)
@@ -59,7 +73,7 @@ const Lesson = (props: Props) => {
         )
       })
   }
-  console.log('workout', workout)
+  console.log('workout', workout?.video)
   return (
     <StyledMain style={{ backgroundColor: '#FAFAFA', height: '100%' }}>
       <Header user={user} name={email} />
@@ -104,8 +118,6 @@ const Lesson = (props: Props) => {
                 </S.LessonProgressTitle>
                 {workout?.practice.map((exercise, index) => {
                   const workoutProgress = progress[workout?.id]
-                  console.log('workoutProgress', workoutProgress)
-                  console.log('exercise', exercise)
                   return (
                     <S.ProgressContainer key={index}>
                       <S.ExercisesDone>
@@ -115,18 +127,21 @@ const Lesson = (props: Props) => {
                         <ExerciseProgress
                           fillProgress={
                             workoutProgress && exercise?.amount
-                              ? Math.min(
-                                  100,
-                                  Math.max(
-                                    0,
-                                    ((workoutProgress[exercise?.id] || 0) /
-                                      exercise?.amount) *
-                                      100,
+                              ? Math.round(
+                                  Math.min(
+                                    100,
+                                    Math.max(
+                                      0,
+                                      ((workoutProgress[exercise?.id] || 0) /
+                                        exercise?.amount) *
+                                        100,
+                                    ),
                                   ),
                                 )
                               : 0
                           }
                           fillColor={colors[index % colors.length]}
+                          bgColor={bgColors[index % colors.length]}
                         />
                       </S.ExerciseBox>
                     </S.ProgressContainer>

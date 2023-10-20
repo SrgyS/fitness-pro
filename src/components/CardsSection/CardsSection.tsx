@@ -57,9 +57,6 @@ const CardsSection = (props: Props) => {
           const userData = snapshot.val()
           setUserCourses(userData.courses || [])
           dispatch(setPracticeProgress(userData.workouts || {}))
-
-          console.log('userData.workouts', userData.workouts)
-          console.log('test', userData.workouts['-NgCovDPCHMVgtwSeDa9']['0'])
         } else {
           setUserCourses([])
         }
@@ -70,20 +67,28 @@ const CardsSection = (props: Props) => {
       .finally(() => setIsLoadingUserCourses(false))
   }, [uid, dispatch])
 
-  useEffect(() => {
-    // Фильтрация курсов доступных пользователю
-    const filteredCourses = userCourses.map(courseId => ({
-      ...data[courseId.trim()],
-      id: courseId,
-    }))
-    setAvailableCourses(filteredCourses)
-  }, [userCourses, data])
+  // useEffect(() => {
+  //   console.log('userCourses1', userCourses)
+  //   console.log('data1', data)
+  //   // Фильтрация курсов доступных пользователю
+  //   const filteredCourses = userCourses.map(courseId => ({
+  //     ...data[courseId.trim()],
+  //     id: courseId,
+  //   }))
+  //   setAvailableCourses(filteredCourses)
+  // }, [userCourses, data])
 
   useEffect(() => {
     if (!isLoading && !error) {
       dispatch(setCourseList(data))
+
+      const filteredCourses = userCourses.map(courseId => ({
+        ...data[courseId.trim()],
+        id: courseId,
+      }))
+      setAvailableCourses(filteredCourses)
     }
-  }, [data, error, isLoading, dispatch])
+  }, [data, error, isLoading, dispatch, userCourses])
 
   if (isLoading || isLoadingUserCourses) {
     return <SkeletonCardCourse />
