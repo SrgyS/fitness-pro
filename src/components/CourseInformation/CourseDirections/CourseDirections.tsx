@@ -8,9 +8,7 @@ const CourseDirections: FC<Pick<ICourse, 'directions'>> = ({ directions }) => {
     <section>
       <Title>Направления:</Title>
       <S.CourseDirectionsWrapper>
-        {directions.map(direction => (
-          <li key={direction}>{direction}</li>
-        ))}
+        {directions?.map(direction => <li key={direction}>{direction}</li>)}
       </S.CourseDirectionsWrapper>
     </section>
   )

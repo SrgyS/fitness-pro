@@ -10,22 +10,34 @@ const commonButtonStyles = css`
 
 export const ProgressPageContainer = styled.div`
   max-width: 100%;
-  height: 100vh;
-  background-color: #271a58;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: 0.5s;
+  opacity: 0;
+  pointer-events: none;
+  &.active {
+    opacity: 1;
+    pointer-events: all;
+  }
 `
 
 export const ProgressHeader = styled.h2`
   font-size: 32px;
   font-weight: 400;
   line-height: 40px;
-  margin-top: 36px;
 `
 
-export const ProgressFormBox = styled.div`
+export const ProgressFormBox = styled.form`
+  box-shadow: lightgray 0px 0px 3px 1px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   background-color: #ffffff;
   width: 444px;
   height: 554px;
@@ -49,24 +61,38 @@ export const ModalInput = styled.input`
   }
 `
 export const Inputs = styled.div`
-  padding-left: 40px;
-  padding-right: 40px;
+  margin-left: 40px;
+  margin-right: 40px;
+  padding: 5px;
   display: flex;
   flex-direction: column;
   row-gap: 5px;
+
+  &::-webkit-scrollbar {
+    background: #d9d4d4;
+    width: 5px;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #b3b1b1;
+    width: 15px;
+    border-radius: 10px;
+  }
 `
 export const SendButton = styled.button`
   ${commonButtonStyles}
   width: 278px;
   height: 52px;
-  margin-bottom: 44px;
-  margin-top: 40px;
+  margin-bottom: 20px;
+  margin-top: 20px;
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
   line-height: 24px;
   color: white;
   background-color: #580ea2;
+  padding-top: 10px;
+  padding-bottom: 10px;
   &:hover {
     background-color: #3f007d;
   }
@@ -75,7 +101,7 @@ export const SendButton = styled.button`
   }
 `
 
-export const Description = styled.p`
+export const Description = styled.label`
   font-size: 18px;
   font-weight: 400;
 `

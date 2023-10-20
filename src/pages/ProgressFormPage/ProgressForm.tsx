@@ -1,26 +1,57 @@
+import { useState } from 'react'
 import * as S from './Progress.styled'
+import { IPractice } from '../../types'
 
-type Props = {}
+type Props = {
+  practice: IPractice[]
+  workoutId: string
+  open: boolean
+  handleOpen: () => void
+  handleUpdate: (changes: IExercisesDone) => void
+}
+
+export interface IExercisesDone {
+  [key: string]: number
+}
 
 const TrainProgress = (props: Props) => {
+  const [exercisesDone, setExercisesDone] = useState<IExercisesDone>({})
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const practiceId = e.target.name
+    const practiceDone = Number(e.target.value)
+    setExercisesDone(prev => ({ ...prev, [practiceId]: practiceDone }))
+  }
+  console.log('propsPractice', props.practice)
+
+  const handleClick = () => {
+    props.handleUpdate(exercisesDone)
+  }
+
   return (
-    <S.ProgressPageContainer>
-      <S.ProgressFormBox>
+    <S.ProgressPageContainer
+      onClick={props.handleOpen}
+      className={props.open ? 'active' : ''}
+    >
+      <S.ProgressFormBox
+        onSubmit={e => {
+          e.preventDefault()
+        }}
+        onClick={e => e.stopPropagation()}
+      >
         <S.ProgressHeader>Мой прогресс</S.ProgressHeader>
-        <S.Inputs>
-          <S.Description>Сколько раз вы сделали наклоны вперед?</S.Description>
-          <S.ExerciseInput
-            name="forward bends"
-            placeholder="Введите значение"
-          />
-          <S.Description>Сколько раз вы сделали наклоны назад?</S.Description>
-          <S.ExerciseInput name="bends back" placeholder="Введите значение" />
-          <S.Description>
-            Сколько раз вы сделали поднятие ног, согнутых в коленях?
-          </S.Description>
-          <S.ExerciseInput name="leg raising" placeholder="Введите значение" />
-        </S.Inputs>
-        <S.SendButton type="submit">Отправить</S.SendButton>
+        {props.practice?.map((item, index) => (
+          <S.Inputs key={index}>
+            <S.Description>Сколько раз вы сделали {item?.name}?</S.Description>
+            <S.ExerciseInput
+              name={item.id}
+              value={exercisesDone[item.id] || 0}
+              placeholder="Введите значение"
+              onInput={handleChange}
+            />
+          </S.Inputs>
+        ))}
+
+        <S.SendButton onClick={handleClick}>Отправить</S.SendButton>
       </S.ProgressFormBox>
     </S.ProgressPageContainer>
   )

@@ -35,3 +35,22 @@ export const CardWithShadow = styled(Card)`
     -10px 5px 15px rgba(217, 217, 217, 1),
     10px -5px 15px rgba(217, 217, 217, 1);
 `
+export const UserCourseButton = styled.button`
+  background-color: rgba(199, 233, 87, 1);
+  width: 136px;
+  height: 43px;
+  color: rgba(0, 0, 0, 1);
+  border-radius: 80px;
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 27px;
+  text-decoration: none;
+  position: absolute;
+  top: 410px;
+  left: 30px;
+  cursor: pointer;
+  ::hover {
+    background-color: rgba(255, 255, 255, 1);
+    color: rgba(199, 233, 87, 1);
+  }
+`

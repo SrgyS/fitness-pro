@@ -46,3 +46,9 @@ export const BigButtonMain = styled(BigButton)`
   margin-top: 34px;
   align-self: center;
 `
+export const BigButtonUser = styled(BigButton)`
+  position: absolute;
+  top: 410px;
+  left: 30px;
+  font-size: 20px;
+`

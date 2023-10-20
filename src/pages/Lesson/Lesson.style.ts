@@ -14,12 +14,16 @@ export const LessonVideoSection = styled.div`
   margin-top: 40px;
 `
 
-export const LessonVideo = styled.div``
+export const LessonVideo = styled.iframe`
+  width: -webkit-fill-available;
+  height: 720px;
+`
 
 export const LessonDescription = styled.div`
   margin-top: 75px;
   display: flex;
   gap: 94px;
+  padding-bottom: 94px;
 `
 //Exercises
 export const LessonExercises = styled.div`
@@ -48,17 +52,19 @@ export const LessonProgress = styled.div`
   background-color: #f2f2f2;
   border-radius: 30px;
   width: 638px;
-  padding-left: 44px;
-  padding-right: 55px;
+
+  padding: 36px 55px 36px 44px;
 `
-export const LessonProgressWrapper = styled.div`
-  margin-top: 36px;
-`
+export const LessonProgressWrapper = styled.div``
 export const LessonProgressTitle = styled.h4`
   display: flex;
   justify-content: center;
   margin-top: 0px;
   margin-bottom: 0px;
+  font-size: 32px;
+
+  font-weight: 400;
+  line-height: 1.25;
 `
 
 export const ProgressContainer = styled.div`
@@ -91,7 +97,7 @@ export const ExerciseCompletion = styled.span`
 export const ExercisesDone = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 27px;
+  gap: 36px;
   width: 50%;
 `
 export const ExerciseName = styled.p`

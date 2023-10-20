@@ -9,13 +9,23 @@ import styled from 'styled-components'
 // `
 
 export const ProgressPageContainer = styled.div`
-  max-width: 100%;
+  width: 100%;
   height: 100vh;
-  background-color: #271a58;
+  background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: 0.5s;
+  opacity: 0;
+  pointer-events: none;
+  &.active {
+    opacity: 1;
+    pointer-events: all;
+  }
 `
 
 export const ProgressHeader = styled.h2`
@@ -54,6 +64,7 @@ export const ExercisesBox = styled.div`
   }
 `
 export const ChooseBtn = styled.button`
+  position: relative;
   display: inline-block;
   width: 278px;
   border-radius: 26px;
@@ -86,5 +97,12 @@ export const ChooseBtnHeader = styled.div`
   padding-top: 11.5px;
 `
 export const ChooseBtnParagraph = styled.div`
-  font-size: 16px;
+  font-size: 15px;
+`
+export const CompleteImg = styled.img`
+  width: 27px;
+  height: 25px;
+  position: absolute;
+  top: 12.5px;
+  right: 12px;
 `
