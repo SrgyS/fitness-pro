@@ -9,7 +9,10 @@ import {
   setPracticeProgress,
   setSelectedCourse,
 } from '../../store/slices/courseSlice'
-import { selectorCourseList, selectorProgress } from '../../store/selectors/courseSelector'
+import {
+  selectorCourseList,
+  selectorProgress,
+} from '../../store/selectors/courseSelector'
 import { useGetCourseListQuery } from '../../store/services/courseService'
 import { getDatabase, ref, get } from 'firebase/database'
 import { useLocation } from 'react-router-dom'
@@ -24,7 +27,7 @@ type Props = { uid: string }
 const CardsSection = (props: Props) => {
   const { data, isLoading, error } = useGetCourseListQuery({})
   const progress = useAppSelector(selectorProgress)
-  console.log("progressFromCardSection", progress)
+  console.log('progressFromCardSection', progress)
   const courseList = useAppSelector(selectorCourseList)
   const dispatch = useAppDispatch()
 
@@ -62,7 +65,7 @@ const CardsSection = (props: Props) => {
         console.error('Ошибка при получении данных пользователя:', error)
       })
       .finally(() => setIsLoadingUserCourses(false))
-  }, [uid])
+  }, [dispatch, uid])
 
   const availableCourses = userCourses.map(courseId => ({
     ...data[courseId],
@@ -81,6 +84,7 @@ const CardsSection = (props: Props) => {
 
   const handleCard = (card: ICourse) => {
     dispatch(setSelectedCourse(card))
+    localStorage.setItem('selectedCourse', JSON.stringify(card))
   }
   console.log('availableCourses', availableCourses)
   if (location.pathname === '/') {
