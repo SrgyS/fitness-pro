@@ -113,19 +113,11 @@ const Lesson = (props: Props) => {
                       </S.ExercisesDone>
                       <S.ExerciseBox>
                         <ExerciseProgress
-                          fillProgress={
-                            workoutProgress && exercise?.amount
-                              ? Math.min(
-                                  100,
-                                  Math.max(
-                                    0,
-                                    ((workoutProgress[exercise?.id] || 0) /
-                                      exercise?.amount) *
-                                      100,
-                                  ),
-                                )
-                              : 0
-                          }
+                          fillProgress={Math.round(
+                            ((progress[workout?.id][exercise?.id] || 0) /
+                              exercise?.amount) *
+                              100,
+                          )}
                           fillColor={colors[index % colors.length]}
                         />
                       </S.ExerciseBox>

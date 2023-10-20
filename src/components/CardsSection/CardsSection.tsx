@@ -60,9 +60,6 @@ const CardsSection = (props: Props) => {
           const userData = snapshot.val()
           setUserCourses(userData.courses || [])
           dispatch(setPracticeProgress(userData.workouts || {}))
-
-          console.log('userData.workouts', userData.workouts)
-          console.log('test', userData.workouts['-NgCovDPCHMVgtwSeDa9']['0'])
         } else {
           setUserCourses([])
         }
