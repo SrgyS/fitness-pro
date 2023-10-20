@@ -21,7 +21,7 @@ export const ExerciseCompletion = styled.div<ExerciseCompletionProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #565eef;
+  background-color: yellow;
   height: 100%;
   width: 45%;
   border-radius: 18px;

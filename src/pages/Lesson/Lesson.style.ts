@@ -23,6 +23,7 @@ export const LessonDescription = styled.div`
   margin-top: 75px;
   display: flex;
   gap: 94px;
+  padding-bottom: 94px;
 `
 //Exercises
 export const LessonExercises = styled.div`

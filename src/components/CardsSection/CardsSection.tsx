@@ -26,6 +26,9 @@ type Props = { uid: string }
 
 const CardsSection = (props: Props) => {
   const { data, isLoading, error } = useGetCourseListQuery({})
+
+  const [availableCourses, setAvailableCourses] = useState<ICourse[]>([])
+
   const progress = useAppSelector(selectorProgress)
   console.log('progressFromCardSection', progress)
   const courseList = useAppSelector(selectorCourseList)
@@ -65,12 +68,16 @@ const CardsSection = (props: Props) => {
         console.error('Ошибка при получении данных пользователя:', error)
       })
       .finally(() => setIsLoadingUserCourses(false))
-  }, [dispatch, uid])
+  }, [uid, dispatch])
 
-  const availableCourses = userCourses.map(courseId => ({
-    ...data[courseId],
-    id: courseId,
-  }))
+  useEffect(() => {
+    // Фильтрация курсов доступных пользователю
+    const filteredCourses = userCourses.map(courseId => ({
+      ...data[courseId.trim()],
+      id: courseId,
+    }))
+    setAvailableCourses(filteredCourses)
+  }, [userCourses, data])
 
   useEffect(() => {
     if (!isLoading && !error) {
@@ -86,7 +93,7 @@ const CardsSection = (props: Props) => {
     dispatch(setSelectedCourse(card))
     localStorage.setItem('selectedCourse', JSON.stringify(card))
   }
-  console.log('availableCourses', availableCourses)
+
   if (location.pathname === '/') {
     return (
       <S.CardsSection>
@@ -103,7 +110,7 @@ const CardsSection = (props: Props) => {
               imgUrl={require(
                 `../../../src/assets/img/prof-card-${(index % 5) + 1}.png`,
               )}
-              id={card.id}
+              id={card.id.trim()}
               onClick={() => handleCard(card)}
               onClickPopUp={() => setModalActive(true)}
             />

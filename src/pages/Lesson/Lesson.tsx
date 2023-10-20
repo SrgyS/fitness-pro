@@ -4,46 +4,65 @@ import { Button } from '../../components/Button/Button.style'
 import Header from '../../components/Header/Header'
 import { StyledMain } from '../Main/Main.styles'
 import ExerciseProgress from '../../components/ProgressBar/ProgressBar'
-import { useAppSelector } from '../../store/hooks/useAppHook'
+import { useAppDispatch, useAppSelector } from '../../store/hooks/useAppHook'
 import {
   selectorProgress,
   selectorSelectedWorkout,
   selectorWorkoutList,
 } from '../../store/selectors/courseSelector'
-import { useNavigate } from 'react-router-dom'
+
 import TrainProgress from '../ProgressFormPage/ProgressForm'
 import { updateProgress } from '../../api/coursesApi'
 import { selectorUserId } from '../../store/selectors/userSelector'
+import { setPracticeProgress } from '../../store/slices/courseSlice'
+import { useAuth } from '../../hooks/useAuth'
 
 type Props = {}
 
 const Lesson = (props: Props) => {
-  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
+  const { user, email } = useAuth()
+
   const progress = useAppSelector(selectorProgress)
   const selectedWorkout = useAppSelector(selectorSelectedWorkout)
-  const [modalOpen, setModalOpen] = useState(false)
   console.log('selectedWorkout', selectedWorkout)
+
+  const [modalOpen, setModalOpen] = useState(false)
+
   const selectedWorkoutList = useAppSelector(selectorWorkoutList)
   console.log('selectedWorkoutList', selectedWorkoutList)
+
   const workout = useMemo(() => {
-    return selectedWorkoutList.find(el => el.id === selectedWorkout)
+    return selectedWorkoutList.find(el => el.id.trim() === selectedWorkout)
   }, [selectedWorkout, selectedWorkoutList])
+
+  const colors = ['#565EEF', '#FF6D00', '#9A48F1']
 
   const handleModalOpen = () => setModalOpen(prev => !prev)
   console.log('progress', progress)
+
   const userId = useAppSelector(selectorUserId)
   console.log('userID', userId)
-  const handleUpdate = (changes: { [key: number]: number }) => {
 
-    if (workout?.id)
-      updateProgress(userId, workout?.id, {
-        ...progress[workout?.id],
+  const handleUpdate = (changes: { [key: number]: number }) => {
+    if (workout?.id.trim())
+      updateProgress(userId, workout?.id.trim(), {
+        ...progress[workout?.id.trim()],
         ...changes,
-      }).then(()=>{handleModalOpen()})
+      }).then(() => {
+        handleModalOpen()
+        dispatch(
+          setPracticeProgress({
+            [workout.id.trim()]: { ...progress[workout.id.trim()], ...changes },
+          }),
+        )
+      })
   }
+  console.log('workout', workout)
   return (
     <StyledMain style={{ backgroundColor: '#FAFAFA', height: '100%' }}>
-      <Header />
+      <Header user={user} name={email} />
       <S.LessonContent>
         <S.LessonTitle> {workout?.course}</S.LessonTitle>
         <S.LessonPath>{workout?.name}</S.LessonPath>
@@ -83,27 +102,36 @@ const Lesson = (props: Props) => {
                 <S.LessonProgressTitle>
                   Мой прогресс по тренировке {workout?.number}:
                 </S.LessonProgressTitle>
-                <S.ProgressContainer>
-                  <S.ExercisesDone>
-                    {workout?.practice.map(exercise => {
-                      return <S.ExerciseName>{exercise.name}</S.ExerciseName>
-                    })}
-                  </S.ExercisesDone>
-                  <S.ExerciseBox>
-                    {workout?.practice.map(exercise => {
-                      return (
+                {workout?.practice.map((exercise, index) => {
+                  const workoutProgress = progress[workout?.id]
+                  console.log('workoutProgress', workoutProgress)
+                  console.log('exercise', exercise)
+                  return (
+                    <S.ProgressContainer key={index}>
+                      <S.ExercisesDone>
+                        <S.ExerciseName>{exercise.name}</S.ExerciseName>
+                      </S.ExercisesDone>
+                      <S.ExerciseBox>
                         <ExerciseProgress
-                          fillProgress={Math.round(
-                            ((progress[workout?.id][exercise?.id] || 0) /
-                              exercise?.amount) *
-                              100,
-                          )}
-                          fillColor="#565EEF"
+                          fillProgress={
+                            workoutProgress && exercise?.amount
+                              ? Math.min(
+                                  100,
+                                  Math.max(
+                                    0,
+                                    ((workoutProgress[exercise?.id] || 0) /
+                                      exercise?.amount) *
+                                      100,
+                                  ),
+                                )
+                              : 0
+                          }
+                          fillColor={colors[index % colors.length]}
                         />
-                      )
-                    })}
-                  </S.ExerciseBox>
-                </S.ProgressContainer>
+                      </S.ExerciseBox>
+                    </S.ProgressContainer>
+                  )
+                })}
               </S.LessonProgressWrapper>
             </S.LessonProgress>
           </S.LessonDescription>
@@ -111,9 +139,9 @@ const Lesson = (props: Props) => {
         <TrainProgress
           open={modalOpen}
           handleOpen={handleModalOpen}
-          workoutId={workout?.id || ''}
+          workoutId={workout?.id.trim() || ''}
           practice={workout?.practice || []}
-          handleUpdate = {handleUpdate}
+          handleUpdate={handleUpdate}
         />
       </S.LessonContent>
     </StyledMain>

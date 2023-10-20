@@ -9,7 +9,7 @@ import styled from 'styled-components'
 // `
 
 export const ProgressPageContainer = styled.div`
-   width: 100%;
+  width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.4);
   display: flex;
@@ -64,6 +64,7 @@ export const ExercisesBox = styled.div`
   }
 `
 export const ChooseBtn = styled.button`
+  position: relative;
   display: inline-block;
   width: 278px;
   border-radius: 26px;
@@ -97,4 +98,11 @@ export const ChooseBtnHeader = styled.div`
 `
 export const ChooseBtnParagraph = styled.div`
   font-size: 15px;
+`
+export const CompleteImg = styled.img`
+  width: 27px;
+  height: 25px;
+  position: absolute;
+  top: 12.5px;
+  right: 12px;
 `
