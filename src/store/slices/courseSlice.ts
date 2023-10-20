@@ -9,7 +9,7 @@ interface ICourseStore {
   progress: IProgress
 }
 
-interface IProgress {
+export interface IProgress {
   [key: string]: { [key: string]: number }
 }
 

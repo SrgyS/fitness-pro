@@ -10,7 +10,7 @@ import {
   selectorSelectedWorkout,
   selectorWorkoutList,
 } from '../../store/selectors/courseSelector'
-import { useNavigate } from 'react-router-dom'
+
 import TrainProgress from '../ProgressFormPage/ProgressForm'
 import { updateProgress } from '../../api/coursesApi'
 import { selectorUserId } from '../../store/selectors/userSelector'
@@ -21,7 +21,6 @@ type Props = {}
 
 const Lesson = (props: Props) => {
   const dispatch = useAppDispatch()
-  const navigate = useNavigate()
 
   const { user, email } = useAuth()
 
@@ -35,7 +34,7 @@ const Lesson = (props: Props) => {
   console.log('selectedWorkoutList', selectedWorkoutList)
 
   const workout = useMemo(() => {
-    return selectedWorkoutList.find(el => el.id === selectedWorkout)
+    return selectedWorkoutList.find(el => el.id.trim() === selectedWorkout)
   }, [selectedWorkout, selectedWorkoutList])
 
   const colors = ['#565EEF', '#FF6D00', '#9A48F1']
@@ -47,19 +46,20 @@ const Lesson = (props: Props) => {
   console.log('userID', userId)
 
   const handleUpdate = (changes: { [key: number]: number }) => {
-    if (workout?.id)
-      updateProgress(userId, workout?.id, {
-        ...progress[workout?.id],
+    if (workout?.id.trim())
+      updateProgress(userId, workout?.id.trim(), {
+        ...progress[workout?.id.trim()],
         ...changes,
       }).then(() => {
         handleModalOpen()
         dispatch(
           setPracticeProgress({
-            [workout.id]: { ...progress[workout.id], ...changes },
+            [workout.id.trim()]: { ...progress[workout.id.trim()], ...changes },
           }),
         )
       })
   }
+  console.log('workout', workout)
   return (
     <StyledMain style={{ backgroundColor: '#FAFAFA', height: '100%' }}>
       <Header user={user} name={email} />
@@ -104,6 +104,8 @@ const Lesson = (props: Props) => {
                 </S.LessonProgressTitle>
                 {workout?.practice.map((exercise, index) => {
                   const workoutProgress = progress[workout?.id]
+                  console.log('workoutProgress', workoutProgress)
+                  console.log('exercise', exercise)
                   return (
                     <S.ProgressContainer key={index}>
                       <S.ExercisesDone>
@@ -111,17 +113,19 @@ const Lesson = (props: Props) => {
                       </S.ExercisesDone>
                       <S.ExerciseBox>
                         <ExerciseProgress
-                          fillProgress={Math.min(
-                            100,
-                            Math.max(
-                              0,
-                              (((workoutProgress &&
-                                workoutProgress[exercise?.id]) ||
-                                0) /
-                                exercise?.amount) *
-                                100,
-                            ),
-                          )}
+                          fillProgress={
+                            workoutProgress && exercise?.amount
+                              ? Math.min(
+                                  100,
+                                  Math.max(
+                                    0,
+                                    ((workoutProgress[exercise?.id] || 0) /
+                                      exercise?.amount) *
+                                      100,
+                                  ),
+                                )
+                              : 0
+                          }
                           fillColor={colors[index % colors.length]}
                         />
                       </S.ExerciseBox>
@@ -135,7 +139,7 @@ const Lesson = (props: Props) => {
         <TrainProgress
           open={modalOpen}
           handleOpen={handleModalOpen}
-          workoutId={workout?.id || ''}
+          workoutId={workout?.id.trim() || ''}
           practice={workout?.practice || []}
           handleUpdate={handleUpdate}
         />

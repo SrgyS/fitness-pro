@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../store/hooks/useAppHook'
 import { useGetWorkoutListQuery } from '../../store/services/courseService'
 import {
+  IProgress,
   setSelectedWorkout,
   setWorkoutList,
 } from '../../store/slices/courseSlice'
@@ -15,66 +16,83 @@ import { useNavigate } from 'react-router-dom'
 import completeUrl from '../../assets/img/done.png'
 
 const ExercisesModal = ({ active, setActive }: IPopupMenuContext) => {
-  // const [completedWorkouts, setCompletedWorkouts] = useState<string[]>([])
   const navigate = useNavigate()
   const progress = useAppSelector(selectorProgress)
   console.log('progressTraining', progress)
 
   const [courseWorkouts, setCourseWorkouts] = useState<IWorkout[]>([])
-  console.log('courseWorkouts', courseWorkouts)
 
   const {
     data: workoutData,
     isLoading: isWorkoutLoading,
     error: workoutError,
   } = useGetWorkoutListQuery({})
-
+  console.log('WorkoutData', workoutData)
+  console.log('courseWorkouts', courseWorkouts)
   const dispatch = useAppDispatch()
 
   const course = useAppSelector(selectorSelectedCourse)
 
   const workout = useMemo(() => course?.workout || [], [course])
   const selectWorkout = (id: string) => {
-    dispatch(setSelectedWorkout(id))
+    dispatch(setSelectedWorkout(id.trim()))
     navigate('/lesson')
   }
 
   console.log('progressTraining', progress, 'selectedWorkout')
+  console.log('type', typeof workoutData)
 
   useEffect(() => {
     if (!isWorkoutLoading && !workoutError) {
-      dispatch(setWorkoutList(workoutData))
+      const workoutDataArray = Object.values<IWorkout>(workoutData)
+      const updatedWorkoutData = workoutDataArray.map((item: IWorkout) => {
+        return {
+          ...item,
+          id: item.id.trim(),
+        }
+      })
+      dispatch(setWorkoutList(updatedWorkoutData))
       console.log('useeffect')
       console.log('workout', workout)
+
       const workouts = workout
-        ?.map(workoutId => workoutData[workoutId])
+        ?.map(workoutId =>
+          updatedWorkoutData.find(item => item.id.trim() === workoutId),
+        )
         ?.filter(item => {
           console.log('dfgd', item)
           return item !== undefined
-        })
+        }) as IWorkout[]
       setCourseWorkouts(workouts)
     }
   }, [workoutData, workoutError, isWorkoutLoading, workout, dispatch])
-
   // Создаем пустой объект, который будет содержать ID и массивы значений amount
-  const completeProgress: { [key: string]: number[] } = {}
+  // const completeProgress: { [key: string]: number[] } = {}
 
   // Итерируемся по каждому объекту в исходном массиве
-  courseWorkouts.forEach(item => {
-    const id = item.id
-    const amountsArray = item.practice.map(exercise => exercise.amount)
-    completeProgress[id] = amountsArray
-  })
-
+  // courseWorkouts.forEach(item => {
+  //   const id = item.id.trim()
+  //   const amountsArray = item.practice.map(exercise => exercise.amount)
+  //   completeProgress[id] = amountsArray
+  // })
+  const completeProgress = useMemo(() => {
+    const progress: { [key: string]: number[] } = {}
+    courseWorkouts.forEach(item => {
+      const id = item.id.trim()
+      const amountsArray = item.practice.map(exercise => exercise.amount)
+      progress[id] = amountsArray
+    })
+    return progress
+  }, [courseWorkouts])
   console.log('res', completeProgress)
 
   const completedWorkouts: string[] = []
 
   // Итерируемся по ключам (ID) объекта `progress`
   for (const id in progress) {
-    if (progress.hasOwnProperty(id) && completeProgress[id]) {
-      const progressArray = progress[id]
-      const completeArray = completeProgress[id]
+    if (progress.hasOwnProperty(id.trim()) && completeProgress[id.trim()]) {
+      const progressArray = progress[id.trim()]
+      const completeArray = completeProgress[id.trim()]
 
       if (Array.isArray(progressArray) && Array.isArray(completeArray)) {
         // Проверяем, что значения в `progress` больше или равны значениям в `complete`
@@ -82,7 +100,7 @@ const ExercisesModal = ({ active, setActive }: IPopupMenuContext) => {
           (value, index) => value >= completeArray[index],
         )
         if (isComplete) {
-          completedWorkouts.push(id)
+          completedWorkouts.push(id.trim())
         }
       }
     }
@@ -108,7 +126,7 @@ const ExercisesModal = ({ active, setActive }: IPopupMenuContext) => {
               <S.ChooseBtn
                 style={borderStyle}
                 key={item?.id}
-                onClick={() => selectWorkout(item?.id)}
+                onClick={() => selectWorkout(item?.id.trim())}
               >
                 {isCompleted && (
                   <S.CompleteImg
