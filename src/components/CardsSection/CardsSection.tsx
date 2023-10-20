@@ -67,17 +67,6 @@ const CardsSection = (props: Props) => {
       .finally(() => setIsLoadingUserCourses(false))
   }, [uid, dispatch])
 
-  // useEffect(() => {
-  //   console.log('userCourses1', userCourses)
-  //   console.log('data1', data)
-  //   // Фильтрация курсов доступных пользователю
-  //   const filteredCourses = userCourses.map(courseId => ({
-  //     ...data[courseId.trim()],
-  //     id: courseId,
-  //   }))
-  //   setAvailableCourses(filteredCourses)
-  // }, [userCourses, data])
-
   useEffect(() => {
     if (!isLoading && !error) {
       dispatch(setCourseList(data))
