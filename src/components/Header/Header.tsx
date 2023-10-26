@@ -15,6 +15,7 @@ const Header = (props: Props) => {
 
   const location = useLocation()
   const isHomePage = location.pathname === '/'
+  console.log('isMenuVisible', isMenuVisible)
   return (
     <S.Header>
       <Logo textColor={isHomePage ? '#fff' : '#000'} />
@@ -26,12 +27,12 @@ const Header = (props: Props) => {
               {' '}
               {props.name}{' '}
             </S.UserName>
-            <S.UserIcon>
-              <ArrowDownIcon
-                className="arrow-icon"
-                color={isHomePage ? '#fff' : '#000'}
-              />{' '}
-            </S.UserIcon>
+            {/* <S.UserIcon> */}
+            <ArrowDownIcon
+              className="arrow-icon"
+              color={isHomePage ? '#fff' : '#000'}
+            />{' '}
+            {/* </S.UserIcon> */}
           </S.UserEnter>
           {isMenuVisible && <UserMenu />}
         </>

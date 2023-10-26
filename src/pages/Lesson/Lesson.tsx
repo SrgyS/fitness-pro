@@ -16,10 +16,9 @@ import { updateProgress } from '../../api/coursesApi'
 import { selectorUserId } from '../../store/selectors/userSelector'
 import { setPracticeProgress } from '../../store/slices/courseSlice'
 import { useAuth } from '../../hooks/useAuth'
+import SuccessPopup from '../../components/SuccessPopup/SuccessPopup'
 
-type Props = {}
-
-const Lesson = (props: Props) => {
+const Lesson = () => {
   const dispatch = useAppDispatch()
 
   const { user, email } = useAuth()
@@ -29,6 +28,15 @@ const Lesson = (props: Props) => {
   console.log('selectedWorkout', selectedWorkout)
 
   const [modalOpen, setModalOpen] = useState(false)
+  const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false)
+
+  const handleSaveSuccess = () => {
+    setIsSuccessPopupOpen(true)
+
+    setTimeout(() => {
+      setIsSuccessPopupOpen(false)
+    }, 1500)
+  }
 
   const selectedWorkoutList = useAppSelector(selectorWorkoutList)
   console.log('selectedWorkoutList', selectedWorkoutList)
@@ -71,12 +79,13 @@ const Lesson = (props: Props) => {
             [workout.id.trim()]: { ...progress[workout.id.trim()], ...changes },
           }),
         )
+        handleSaveSuccess()
       })
   }
   console.log('workout', workout?.video)
   return (
     <StyledMain style={{ backgroundColor: '#FAFAFA', height: '100%' }}>
-      <Header user={user} name={email} />
+      <Header user={user} name={email ?? ''} />
       <S.LessonContent>
         <S.LessonTitle> {workout?.course}</S.LessonTitle>
         <S.LessonPath>{workout?.name}</S.LessonPath>
@@ -95,9 +104,9 @@ const Lesson = (props: Props) => {
               <S.Exercises>
                 <S.ExercisesTitle>Упражнения</S.ExercisesTitle>
                 <S.ExercisesList>
-                  {workout?.practice.map(exercise => {
+                  {workout?.practice.map((exercise, index) => {
                     return (
-                      <S.Exercise>
+                      <S.Exercise key={index}>
                         {exercise.name} ({exercise.amount} повторений)
                       </S.Exercise>
                     )
@@ -157,6 +166,10 @@ const Lesson = (props: Props) => {
           workoutId={workout?.id.trim() || ''}
           practice={workout?.practice || []}
           handleUpdate={handleUpdate}
+        />
+        <SuccessPopup
+          isOpen={isSuccessPopupOpen}
+          onClose={() => setIsSuccessPopupOpen(false)}
         />
       </S.LessonContent>
     </StyledMain>

@@ -5,13 +5,17 @@ interface ArrowDownIconProps {
   className?: string
 }
 
-const ArrowDownIconWrapper = styled.svg`
+const ArrowDownIconWrapper = styled.div<ArrowDownIconProps>`
+  svg {
+    width: 100%;
+    height: 100%;
+  }
   color: ${props => props.color || 'black'};
 `
 
 export const ArrowDownIcon = ({ color }: ArrowDownIconProps) => {
   return (
-    <ArrowDownIconWrapper>
+    <ArrowDownIconWrapper color={color}>
       <svg
         width="14"
         height="9"

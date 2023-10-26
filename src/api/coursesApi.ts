@@ -33,7 +33,6 @@ export async function getCoursesWorkout(id: string) {
     throw new Error('Ошибка сервера')
   }
   const coursesWorkout = await response.json()
-  console.log(coursesWorkout)
   return coursesWorkout
 }
 
@@ -45,7 +44,6 @@ export async function getWorkout(id: string) {
     throw new Error('Ошибка сервера')
   }
   const workout = await response.json()
-  console.log(workout)
   return workout
 }
 

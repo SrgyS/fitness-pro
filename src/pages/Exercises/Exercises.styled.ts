@@ -1,12 +1,6 @@
 import styled from 'styled-components'
 
-// const commonButtonStyles = css`
-//   border-radius: 46px;
-//   cursor: pointer;
-//   font-weight: 400;
-//   transition: background-color 0.3s ease;
-//   display: inline-block;
-// `
+
 
 export const ProgressPageContainer = styled.div`
   width: 100%;

@@ -5,9 +5,7 @@ import { removeUser } from '../../../store/slices/userSlice'
 import { NavLink } from 'react-router-dom'
 import cn from 'classnames'
 
-type Props = {}
-
-const UserMenu = (props: Props) => {
+const UserMenu = () => {
   const dispatch = useDispatch()
   const activeLinkClass = 'underline'
 
@@ -38,8 +36,8 @@ const UserMenu = (props: Props) => {
 
         <S.StyledMenuItem
           onClick={() => {
-            dispatch(removeUser())
             localStorage.clear()
+            dispatch(removeUser())
           }}
         >
           <S.StyledMenuButton>Выйти</S.StyledMenuButton>

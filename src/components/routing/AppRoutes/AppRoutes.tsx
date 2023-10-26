@@ -13,8 +13,20 @@ import ChangePassword from '../../../pages/Auth/NewAuthMetasForms/ChangePassword
 import ChangeLogin from '../../../pages/Auth/NewAuthMetasForms/ChangeLogin'
 
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute'
+import { useAuth } from '../../../hooks/useAuth'
+import { useAppDispatch } from '../../../store/hooks/useAppHook'
+import { setUser } from '../../../store/slices/userSlice'
+import { IUser } from '../../../types'
 function AppRoutes() {
-  const user = localStorage.getItem('user')
+  const dispatch = useAppDispatch()
+  const { user } = useAuth()
+  if (!user) {
+    const localStorageUser = localStorage.getItem('user')
+    if (localStorageUser) {
+      const user: IUser = JSON.parse(localStorageUser)
+      dispatch(setUser(user))
+    }
+  }
 
   return (
     <Routes>
@@ -27,7 +39,6 @@ function AppRoutes() {
         <Route path="/lesson" element={<Lesson />} />
         <Route path="/change/password" element={<ChangePassword />} />
         <Route path="/change/login" element={<ChangeLogin />} />
-        {/* <Route path="/exercises" element={<Exercises />} /> */}
       </Route>
 
       <Route path="*" element={<NotFound />} />

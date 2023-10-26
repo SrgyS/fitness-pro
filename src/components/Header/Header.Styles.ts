@@ -28,7 +28,7 @@ export const UserName = styled.div<UserNameProps>`
   align-self: center;
   color: ${props => props.$textColor || '#fff'};
 `
-export const UserIcon = styled.svg`
+export const UserIcon = styled.div`
   align-self: center;
   width: 15px;
   height: 10px;

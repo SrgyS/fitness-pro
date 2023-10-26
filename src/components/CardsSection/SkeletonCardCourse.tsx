@@ -7,8 +7,9 @@ export const SkeletonCardCourse: FC = () => {
     <S.CardsWrapper>
       {Array(6)
         .fill('')
-        .map(card => (
+        .map((card, index) => (
           <ContentLoader
+            key={index}
             width={360}
             height={480}
             backgroundColor="#f0f0f0"

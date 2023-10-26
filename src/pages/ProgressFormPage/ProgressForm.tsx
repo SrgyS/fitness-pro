@@ -21,7 +21,6 @@ const TrainProgress = (props: Props) => {
     const practiceDone = Number(e.target.value)
     setExercisesDone(prev => ({ ...prev, [practiceId]: practiceDone }))
   }
-  console.log('propsPractice', props.practice)
 
   const handleClick = () => {
     props.handleUpdate(exercisesDone)
@@ -33,10 +32,10 @@ const TrainProgress = (props: Props) => {
       className={props.open ? 'active' : ''}
     >
       <S.ProgressFormBox
-        onSubmit={e => {
+        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
           e.preventDefault()
         }}
-        onClick={e => e.stopPropagation()}
+        onClick={(e: React.FormEvent<HTMLFormElement>) => e.stopPropagation()}
       >
         <S.ProgressHeader>Мой прогресс</S.ProgressHeader>
         {props.practice?.map((item, index) => (

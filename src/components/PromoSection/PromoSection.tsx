@@ -1,9 +1,7 @@
 import React from 'react'
 import * as S from './PromoSection.styles'
 
-type Props = {}
-
-const PromoSection = (props: Props) => {
+const PromoSection = () => {
   return (
     <S.Promo>
       <S.ContentWrapper>
