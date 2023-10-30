@@ -47,4 +47,8 @@ body,
   color: rgba(88, 14, 162, 1);
 text-decoration: underline;
  }
+
+ .no-scroll {
+  overflow: hidden;
+}
 `

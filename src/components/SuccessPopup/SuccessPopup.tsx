@@ -5,7 +5,6 @@ import successUrl from '../../assets/img/success.png'
 type Props = { isOpen: boolean; onClose?: () => void }
 
 const SuccessPopup = ({ isOpen = false }: Props) => {
-  console.log(`SuccessPopup rendered`, isOpen)
   if (!isOpen) {
     return null
   }

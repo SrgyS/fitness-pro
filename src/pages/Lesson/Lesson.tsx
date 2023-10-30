@@ -25,7 +25,6 @@ const Lesson = () => {
 
   const progress = useAppSelector(selectorProgress)
   const selectedWorkout = useAppSelector(selectorSelectedWorkout)
-  console.log('selectedWorkout', selectedWorkout)
 
   const [modalOpen, setModalOpen] = useState(false)
   const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false)
@@ -39,7 +38,6 @@ const Lesson = () => {
   }
 
   const selectedWorkoutList = useAppSelector(selectorWorkoutList)
-  console.log('selectedWorkoutList', selectedWorkoutList)
 
   const workout = useMemo(() => {
     return selectedWorkoutList.find(el => el.id.trim() === selectedWorkout)
@@ -62,10 +60,14 @@ const Lesson = () => {
   ]
 
   const handleModalOpen = () => setModalOpen(prev => !prev)
-  console.log('progress', progress)
+
+  if (modalOpen) {
+    document.body.classList.add('no-scroll')
+  } else {
+    document.body.classList.remove('no-scroll')
+  }
 
   const userId = useAppSelector(selectorUserId)
-  console.log('userID', userId)
 
   const handleUpdate = (changes: { [key: number]: number }) => {
     if (workout?.id.trim())
@@ -82,9 +84,14 @@ const Lesson = () => {
         handleSaveSuccess()
       })
   }
-  console.log('workout', workout?.video)
+
   return (
-    <StyledMain style={{ backgroundColor: '#FAFAFA', height: '100%' }}>
+    <StyledMain
+      style={{
+        backgroundColor: '#FAFAFA',
+        height: '100%',
+      }}
+    >
       <Header user={user} name={email ?? ''} />
       <S.LessonContent>
         <S.LessonTitle> {workout?.course}</S.LessonTitle>
@@ -134,7 +141,7 @@ const Lesson = () => {
                       </S.ExercisesDone>
                       <S.ExerciseBox>
                         <ExerciseProgress
-                          fillProgress={
+                          $fillProgress={
                             workoutProgress && exercise?.amount
                               ? Math.round(
                                   Math.min(
@@ -149,7 +156,7 @@ const Lesson = () => {
                                 )
                               : 0
                           }
-                          fillColor={colors[index % colors.length]}
+                          $fillColor={colors[index % colors.length]}
                           bgColor={bgColors[index % colors.length]}
                         />
                       </S.ExerciseBox>

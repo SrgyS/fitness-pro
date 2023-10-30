@@ -25,8 +25,7 @@ const ExercisesModal = ({ active, setActive }: IPopupMenuContext) => {
     isLoading: isWorkoutLoading,
     error: workoutError,
   } = useGetWorkoutListQuery({})
-  console.log('WorkoutData', workoutData)
-  console.log('courseWorkouts', courseWorkouts)
+
   const dispatch = useAppDispatch()
 
   const course = useAppSelector(selectorSelectedCourse)
@@ -36,9 +35,6 @@ const ExercisesModal = ({ active, setActive }: IPopupMenuContext) => {
     dispatch(setSelectedWorkout(id.trim()))
     navigate('/lesson')
   }
-
-  console.log('progressTraining', progress, 'selectedWorkout')
-  console.log('type', typeof workoutData)
 
   useEffect(() => {
     if (!isWorkoutLoading && !workoutError) {
@@ -50,15 +46,12 @@ const ExercisesModal = ({ active, setActive }: IPopupMenuContext) => {
         }
       })
       dispatch(setWorkoutList(updatedWorkoutData))
-      console.log('useeffect')
-      console.log('workout', workout)
 
       const workouts = workout
         ?.map(workoutId =>
           updatedWorkoutData.find(item => item.id.trim() === workoutId),
         )
         ?.filter(item => {
-          console.log('dfgd', item)
           return item !== undefined
         }) as IWorkout[]
       setCourseWorkouts(workouts)
@@ -78,7 +71,6 @@ const ExercisesModal = ({ active, setActive }: IPopupMenuContext) => {
     })
     return progress
   }, [courseWorkouts])
-  console.log('res', completeProgress)
 
   const completedWorkouts: string[] = []
 
@@ -100,9 +92,6 @@ const ExercisesModal = ({ active, setActive }: IPopupMenuContext) => {
     }
   }
 
-  console.log('completeArr', completedWorkouts)
-
-  console.log('workouts', courseWorkouts)
   return (
     <S.ProgressPageContainer
       className={active ? 'active' : ''}

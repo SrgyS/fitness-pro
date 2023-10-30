@@ -13,7 +13,6 @@ import { IFormData } from '../../../types'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../../hooks/useAuth'
-import { getDatabase, ref, set } from 'firebase/database'
 
 const ChangeLogin = () => {
   const [errorMessage, setErrorMessage] = useState('')
@@ -39,20 +38,14 @@ const ChangeLogin = () => {
             await reauthenticateWithCredential(user, credentials)
 
             await updateEmail(user, newEmail)
-          }
-          const db = getDatabase()
-          const userRef = ref(db, 'users/' + user.uid)
-          const userData = {
-            email: user.email,
-            id: user.uid,
-          }
-          await set(userRef, userData)
 
-          dispatch(
-            changeEmail({
-              email: newEmail,
-            }),
-          )
+            dispatch(
+              changeEmail({
+                email: newEmail,
+              }),
+            )
+          }
+
           setErrorMessage('')
           navigate('/user')
         } catch (error) {

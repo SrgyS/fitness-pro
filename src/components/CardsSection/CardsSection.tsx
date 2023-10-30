@@ -40,6 +40,14 @@ const CardsSection = (props: Props) => {
   //----Стейт для поп-ап меню тренировок----//
   const [modalActive, setModalActive] = useState(false)
 
+  const handleModalActive = () => {
+    setModalActive(prev => !prev)
+  }
+  if (modalActive) {
+    document.body.classList.add('no-scroll')
+  } else {
+    document.body.classList.remove('no-scroll')
+  }
   useEffect(() => {
     const userRef = ref(getDatabase(), `users/${uid}`)
 
@@ -99,7 +107,7 @@ const CardsSection = (props: Props) => {
               )}
               id={card.id.trim()}
               onClick={() => handleCard(card)}
-              onClickPopUp={() => setModalActive(true)}
+              onClickPopUp={handleModalActive}
             />
           ))}
         </S.CardsWrapper>
@@ -128,7 +136,7 @@ const CardsSection = (props: Props) => {
                 id={card.id}
                 onClick={() => handleCard(card)}
                 shadow={true}
-                onClickPopUp={() => setModalActive(true)}
+                onClickPopUp={handleModalActive}
               />
             ))
           ) : (

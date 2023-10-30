@@ -24,4 +24,10 @@ export const UserButton = styled.button`
   font-size: 18px;
   color: rgba(255, 255, 255, 1);
   cursor: pointer;
+  &:hover {
+    background: #3f007d;
+  }
+  &:active {
+    background-color: #271a58;
+  }
 `
