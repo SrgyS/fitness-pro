@@ -16,14 +16,24 @@ export interface IExercisesDone {
 
 const TrainProgress = (props: Props) => {
   const [exercisesDone, setExercisesDone] = useState<IExercisesDone>({})
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const practiceId = e.target.name
+
     const practiceDone = Number(e.target.value)
     setExercisesDone(prev => ({ ...prev, [practiceId]: practiceDone }))
   }
 
   const handleClick = () => {
-    props.handleUpdate(exercisesDone)
+    const updatedExercisesDone: IExercisesDone = {}
+
+    props.practice?.forEach(item => {
+      const exerciseId = item.id
+      const value = exercisesDone[exerciseId] || 0
+      updatedExercisesDone[exerciseId] = value
+    })
+
+    props.handleUpdate(updatedExercisesDone)
   }
 
   return (
@@ -42,8 +52,9 @@ const TrainProgress = (props: Props) => {
           <S.Inputs key={index}>
             <S.Description>Сколько раз вы сделали {item?.name}?</S.Description>
             <S.ExerciseInput
+              type="number"
               name={item.id}
-              value={exercisesDone[item.id] || 0}
+              value={exercisesDone[item.id] || ''}
               placeholder="Введите значение"
               onInput={handleChange}
             />

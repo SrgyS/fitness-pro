@@ -7,7 +7,6 @@ import CardsSection from '../../components/CardsSection/CardsSection'
 
 const User = () => {
   const { user, id, email, password } = useAuth()
-  console.log(`User initialized`)
 
   return (
     <>

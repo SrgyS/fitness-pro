@@ -39,20 +39,14 @@ const ChangeLogin = () => {
             await reauthenticateWithCredential(user, credentials)
 
             await updateEmail(user, newEmail)
-          }
-          const db = getDatabase()
-          const userRef = ref(db, 'users/' + user.uid)
-          const userData = {
-            email: user.email,
-            id: user.uid,
-          }
-          await set(userRef, userData)
 
-          dispatch(
-            changeEmail({
-              email: newEmail,
-            }),
-          )
+            dispatch(
+              changeEmail({
+                email: newEmail,
+              }),
+            )
+          }
+
           setErrorMessage('')
           navigate('/user')
         } catch (error) {

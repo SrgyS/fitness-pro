@@ -44,6 +44,10 @@ export const LoginButton = styled.button`
   &:active {
     background-color: #d1cece;
   }
+  &:disabled {
+    background-color: #d9d9d9;
+    cursor: not-allowed;
+  }
 `
 export const StyledError = styled.div`
   color: coral;
