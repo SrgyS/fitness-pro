@@ -17,7 +17,6 @@ import completeUrl from '../../assets/img/done.png'
 const ExercisesModal = ({ active, setActive }: IPopupMenuContext) => {
   const navigate = useNavigate()
   const progress = useAppSelector(selectorProgress)
-  console.log('progressTraining', progress)
 
   const [courseWorkouts, setCourseWorkouts] = useState<IWorkout[]>([])
 
@@ -26,8 +25,7 @@ const ExercisesModal = ({ active, setActive }: IPopupMenuContext) => {
     isLoading: isWorkoutLoading,
     error: workoutError,
   } = useGetWorkoutListQuery({})
-  console.log('WorkoutData', workoutData)
-  console.log('courseWorkouts', courseWorkouts)
+
   const dispatch = useAppDispatch()
 
   const course = useAppSelector(selectorSelectedCourse)
@@ -37,9 +35,6 @@ const ExercisesModal = ({ active, setActive }: IPopupMenuContext) => {
     dispatch(setSelectedWorkout(id.trim()))
     navigate('/lesson')
   }
-
-  console.log('progressTraining', progress, 'selectedWorkout')
-  console.log('type', typeof workoutData)
 
   useEffect(() => {
     if (!isWorkoutLoading && !workoutError) {
@@ -51,15 +46,12 @@ const ExercisesModal = ({ active, setActive }: IPopupMenuContext) => {
         }
       })
       dispatch(setWorkoutList(updatedWorkoutData))
-      console.log('useeffect')
-      console.log('workout', workout)
 
       const workouts = workout
         ?.map(workoutId =>
           updatedWorkoutData.find(item => item.id.trim() === workoutId),
         )
         ?.filter(item => {
-          console.log('dfgd', item)
           return item !== undefined
         }) as IWorkout[]
       setCourseWorkouts(workouts)
@@ -79,13 +71,12 @@ const ExercisesModal = ({ active, setActive }: IPopupMenuContext) => {
     })
     return progress
   }, [courseWorkouts])
-  console.log('res', completeProgress)
 
   const completedWorkouts: string[] = []
 
   // Итерируемся по ключам (ID) объекта `progress`
   for (const id in progress) {
-    if (progress.hasOwnProperty(id.trim()) && completeProgress[id.trim()]) {
+    if (progress?.[id.trim()] && completeProgress[id.trim()]) {
       const progressArray = progress[id.trim()]
       const completeArray = completeProgress[id.trim()]
 
@@ -101,15 +92,16 @@ const ExercisesModal = ({ active, setActive }: IPopupMenuContext) => {
     }
   }
 
-  console.log('completeArr', completedWorkouts)
-
-  console.log('workouts', courseWorkouts)
   return (
     <S.ProgressPageContainer
       className={active ? 'active' : ''}
       onClick={() => setActive(false)}
     >
-      <S.ProgressFormBox onClick={e => e.stopPropagation()}>
+      <S.ProgressFormBox
+        onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
+          e.stopPropagation()
+        }
+      >
         <S.ProgressHeader>Выберите тренировку</S.ProgressHeader>
         <S.ExercisesBox>
           {courseWorkouts?.map(item => {

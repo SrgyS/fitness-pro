@@ -5,18 +5,14 @@ import PromoSection from '../../components/PromoSection/PromoSection'
 import CardsSection from '../../components/CardsSection/CardsSection'
 import { useAuth } from '../../hooks/useAuth'
 
-type Props = {}
-
-const Main = (props: Props) => {
+const Main = () => {
   const { user, email, id } = useAuth()
-  // const courses = getCourses()
-  // Object.keys(courses).map(id = courses[id]) таким образом можно перебрать наш обьект
 
   return (
     <StyledMain>
-      <Header user={user} name={email} />
+      <Header user={user} name={email ?? ''} />
       <PromoSection />
-      <CardsSection uid={id} />
+      <CardsSection uid={id ?? ''} />
     </StyledMain>
   )
 }

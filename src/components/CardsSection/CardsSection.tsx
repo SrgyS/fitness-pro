@@ -9,10 +9,7 @@ import {
   setPracticeProgress,
   setSelectedCourse,
 } from '../../store/slices/courseSlice'
-import {
-  selectorCourseList,
-  selectorProgress,
-} from '../../store/selectors/courseSelector'
+import { selectorCourseList } from '../../store/selectors/courseSelector'
 import { useGetCourseListQuery } from '../../store/services/courseService'
 import { getDatabase, ref, get } from 'firebase/database'
 import { useLocation } from 'react-router-dom'
@@ -29,8 +26,6 @@ const CardsSection = (props: Props) => {
 
   const [availableCourses, setAvailableCourses] = useState<ICourse[]>([])
 
-  const progress = useAppSelector(selectorProgress)
-  console.log('progressFromCardSection', progress)
   const courseList = useAppSelector(selectorCourseList)
   const dispatch = useAppDispatch()
 
@@ -39,16 +34,22 @@ const CardsSection = (props: Props) => {
 
   //-----Получаем список курсов доступных юзеру-----//
   const [userCourses, setUserCourses] = useState<string[]>([])
-  console.log('userCourses', userCourses)
 
   const [isLoadingUserCourses, setIsLoadingUserCourses] = useState(false)
 
   //----Стейт для поп-ап меню тренировок----//
   const [modalActive, setModalActive] = useState(false)
 
+  const handleModalActive = () => {
+    setModalActive(prev => !prev)
+  }
+  if (modalActive) {
+    document.body.classList.add('no-scroll')
+  } else {
+    document.body.classList.remove('no-scroll')
+  }
   useEffect(() => {
     const userRef = ref(getDatabase(), `users/${uid}`)
-    console.log('userId:', uid)
 
     setIsLoadingUserCourses(true)
     get(userRef)
@@ -106,7 +107,7 @@ const CardsSection = (props: Props) => {
               )}
               id={card.id.trim()}
               onClick={() => handleCard(card)}
-              onClickPopUp={() => setModalActive(true)}
+              onClickPopUp={handleModalActive}
             />
           ))}
         </S.CardsWrapper>
@@ -135,7 +136,7 @@ const CardsSection = (props: Props) => {
                 id={card.id}
                 onClick={() => handleCard(card)}
                 shadow={true}
-                onClickPopUp={() => setModalActive(true)}
+                onClickPopUp={handleModalActive}
               />
             ))
           ) : (

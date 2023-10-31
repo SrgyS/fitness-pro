@@ -8,7 +8,7 @@ const CourseDescription = () => {
   const { user, email } = useAuth()
   return (
     <S.CourseDescriptionPage>
-      <Header user={user} name={email} />
+      <Header user={user} name={email ?? ''} />
       <CourseInformation />
       <Bid />
     </S.CourseDescriptionPage>

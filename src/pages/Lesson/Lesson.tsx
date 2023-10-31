@@ -16,22 +16,28 @@ import { updateProgress } from '../../api/coursesApi'
 import { selectorUserId } from '../../store/selectors/userSelector'
 import { setPracticeProgress } from '../../store/slices/courseSlice'
 import { useAuth } from '../../hooks/useAuth'
+import SuccessPopup from '../../components/SuccessPopup/SuccessPopup'
 
-type Props = {}
-
-const Lesson = (props: Props) => {
+const Lesson = () => {
   const dispatch = useAppDispatch()
 
   const { user, email } = useAuth()
 
   const progress = useAppSelector(selectorProgress)
   const selectedWorkout = useAppSelector(selectorSelectedWorkout)
-  console.log('selectedWorkout', selectedWorkout)
 
   const [modalOpen, setModalOpen] = useState(false)
+  const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false)
+
+  const handleSaveSuccess = () => {
+    setIsSuccessPopupOpen(true)
+
+    setTimeout(() => {
+      setIsSuccessPopupOpen(false)
+    }, 1500)
+  }
 
   const selectedWorkoutList = useAppSelector(selectorWorkoutList)
-  console.log('selectedWorkoutList', selectedWorkoutList)
 
   const workout = useMemo(() => {
     return selectedWorkoutList.find(el => el.id.trim() === selectedWorkout)
@@ -54,10 +60,14 @@ const Lesson = (props: Props) => {
   ]
 
   const handleModalOpen = () => setModalOpen(prev => !prev)
-  console.log('progress', progress)
+
+  if (modalOpen) {
+    document.body.classList.add('no-scroll')
+  } else {
+    document.body.classList.remove('no-scroll')
+  }
 
   const userId = useAppSelector(selectorUserId)
-  console.log('userID', userId)
 
   const handleUpdate = (changes: { [key: number]: number }) => {
     if (workout?.id.trim())
@@ -71,12 +81,18 @@ const Lesson = (props: Props) => {
             [workout.id.trim()]: { ...progress[workout.id.trim()], ...changes },
           }),
         )
+        handleSaveSuccess()
       })
   }
-  console.log('workout', workout?.video)
+
   return (
-    <StyledMain style={{ backgroundColor: '#FAFAFA', height: '100%' }}>
-      <Header user={user} name={email} />
+    <StyledMain
+      style={{
+        backgroundColor: '#FAFAFA',
+        height: '100%',
+      }}
+    >
+      <Header user={user} name={email ?? ''} />
       <S.LessonContent>
         <S.LessonTitle> {workout?.course}</S.LessonTitle>
         <S.LessonPath>{workout?.name}</S.LessonPath>
@@ -95,9 +111,9 @@ const Lesson = (props: Props) => {
               <S.Exercises>
                 <S.ExercisesTitle>Упражнения</S.ExercisesTitle>
                 <S.ExercisesList>
-                  {workout?.practice.map(exercise => {
+                  {workout?.practice.map((exercise, index) => {
                     return (
-                      <S.Exercise>
+                      <S.Exercise key={index}>
                         {exercise.name} ({exercise.amount} повторений)
                       </S.Exercise>
                     )
@@ -125,7 +141,7 @@ const Lesson = (props: Props) => {
                       </S.ExercisesDone>
                       <S.ExerciseBox>
                         <ExerciseProgress
-                          fillProgress={
+                          $fillProgress={
                             workoutProgress && exercise?.amount
                               ? Math.round(
                                   Math.min(
@@ -140,7 +156,7 @@ const Lesson = (props: Props) => {
                                 )
                               : 0
                           }
-                          fillColor={colors[index % colors.length]}
+                          $fillColor={colors[index % colors.length]}
                           bgColor={bgColors[index % colors.length]}
                         />
                       </S.ExerciseBox>
@@ -157,6 +173,10 @@ const Lesson = (props: Props) => {
           workoutId={workout?.id.trim() || ''}
           practice={workout?.practice || []}
           handleUpdate={handleUpdate}
+        />
+        <SuccessPopup
+          isOpen={isSuccessPopupOpen}
+          onClose={() => setIsSuccessPopupOpen(false)}
         />
       </S.LessonContent>
     </StyledMain>

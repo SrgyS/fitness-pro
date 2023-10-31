@@ -9,9 +9,7 @@ import { useAppDispatch } from '../../hooks/reduxHooks'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
-type Props = {}
-
-const Register = (props: Props) => {
+const Register = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const [errorMessage, setErrorMessage] = useState('')
@@ -28,7 +26,6 @@ const Register = (props: Props) => {
 
       if (user) {
         const token = await user.getIdToken()
-        console.log(user)
 
         const db = getDatabase()
         const userRef = ref(db, 'users/' + user.uid)
