@@ -15,9 +15,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../../hooks/useAuth'
 import { getDatabase, ref, set } from 'firebase/database'
 
-type Props = {}
-
-const ChangeLogin = (props: Props) => {
+const ChangeLogin = () => {
   const [errorMessage, setErrorMessage] = useState('')
   const auth = getAuth()
   const dispatch = useDispatch()
@@ -35,25 +33,20 @@ const ChangeLogin = (props: Props) => {
       }
       if (email) {
         try {
-          const credentials = EmailAuthProvider.credential(email, password)
+          if (password !== null) {
+            const credentials = EmailAuthProvider.credential(email, password)
 
-          await reauthenticateWithCredential(user, credentials)
+            await reauthenticateWithCredential(user, credentials)
 
-          await updateEmail(user, newEmail)
+            await updateEmail(user, newEmail)
 
-          const db = getDatabase()
-          const userRef = ref(db, 'users/' + user.uid)
-          const userData = {
-            email: user.email,
-            id: user.uid,
+            dispatch(
+              changeEmail({
+                email: newEmail,
+              }),
+            )
           }
-          await set(userRef, userData)
 
-          dispatch(
-            changeEmail({
-              email: newEmail,
-            }),
-          )
           setErrorMessage('')
           navigate('/user')
         } catch (error) {

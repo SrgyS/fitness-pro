@@ -11,9 +11,6 @@ export const formData = {
       { type: 'password', name: 'password', placeholder: 'Пароль' },
     ],
   },
-  ProgressForm: {
-    fields: [{ type: 'text', name: 'fieldA', placeholder: 'Введите значение' }],
-  },
   ChangePassWordForm: {
     fields: [
       { type: 'password', name: 'password', placeholder: 'Пароль' },
@@ -50,13 +47,14 @@ export function Form(props: IFormProps) {
   const InitialFormData: IFormData = {}
   const [inputsData, setInputsData] = useState<IFormData>(InitialFormData)
   const [error, setError] = useState<FormErrors>({})
+  const [isDisabled, setDisabled] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setInputsData({ ...inputsData, [name]: value })
     setError({})
   }
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const fieldErrors: FormErrors = {}
@@ -80,10 +78,18 @@ export function Form(props: IFormProps) {
     }
 
     if (onSubmit) {
-      onSubmit(inputsData)
-      setError({})
+      setDisabled(true)
+      try {
+        await onSubmit(inputsData)
+        setError({})
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setDisabled(false)
+      }
     }
   }
+
   const formFields = fields.map((field: IFormField, index: number) => (
     <div key={index}>
       <Input
@@ -102,7 +108,9 @@ export function Form(props: IFormProps) {
     <FormField onSubmit={handleSubmit}>
       {formFields}
       {errorMessage && <StyledError>{errorMessage}</StyledError>}
-      <LoginButton type="submit">{buttonText}</LoginButton>
+      <LoginButton disabled={isDisabled} type="submit">
+        {buttonText}
+      </LoginButton>
     </FormField>
   )
 }

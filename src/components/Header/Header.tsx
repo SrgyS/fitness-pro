@@ -3,7 +3,7 @@ import { StyledSmallButton } from '../Buttons/MainButtons/Button.styles'
 import Logo from '../Logo/Logo'
 import * as S from './Header.Styles'
 import { Link, useLocation } from 'react-router-dom'
-import { ArrowDownIcon } from '../../assets/icons/ArrowDownIcon'
+
 import UserMenu from './UserMenu/UserMenu'
 
 type Props = { user?: boolean; name?: string }
@@ -15,6 +15,7 @@ const Header = (props: Props) => {
 
   const location = useLocation()
   const isHomePage = location.pathname === '/'
+
   return (
     <S.Header>
       <Logo textColor={isHomePage ? '#fff' : '#000'} />
@@ -26,12 +27,10 @@ const Header = (props: Props) => {
               {' '}
               {props.name}{' '}
             </S.UserName>
-            <S.UserIcon>
-              <ArrowDownIcon
-                className="arrow-icon"
-                color={isHomePage ? '#fff' : '#000'}
-              />{' '}
-            </S.UserIcon>
+            <S.Arrow
+              color={isHomePage ? '#fff' : '#000'}
+              $isVisible={isMenuVisible}
+            />
           </S.UserEnter>
           {isMenuVisible && <UserMenu />}
         </>

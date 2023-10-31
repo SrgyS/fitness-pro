@@ -2,14 +2,30 @@ import React from 'react'
 import * as S from './UserMenu.styles'
 import { useDispatch } from 'react-redux'
 import { removeUser } from '../../../store/slices/userSlice'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import cn from 'classnames'
+import { getAuth, signOut } from 'firebase/auth'
 
-type Props = {}
-
-const UserMenu = (props: Props) => {
+const UserMenu = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const activeLinkClass = 'underline'
+  const handleSignOut = () => {
+    const auth = getAuth()
+
+    localStorage.clear()
+
+    dispatch(removeUser())
+
+    signOut(auth)
+      .then(() => {
+        console.log('Пользователь успешно разлогинен')
+      })
+      .catch(error => {
+        console.error('Ошибка при разлогинивании:', error)
+      })
+    navigate('/')
+  }
 
   return (
     <S.StyledUserMenu>
@@ -36,12 +52,7 @@ const UserMenu = (props: Props) => {
           </NavLink>
         </S.StyledMenuItem>
 
-        <S.StyledMenuItem
-          onClick={() => {
-            dispatch(removeUser())
-            localStorage.clear()
-          }}
-        >
+        <S.StyledMenuItem onClick={() => handleSignOut()}>
           <S.StyledMenuButton>Выйти</S.StyledMenuButton>
         </S.StyledMenuItem>
       </S.StyledUserMenuList>

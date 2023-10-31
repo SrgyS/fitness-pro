@@ -8,9 +8,7 @@ import { useAppDispatch } from '../../hooks/reduxHooks'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import { setUser } from '../../store/slices/userSlice'
 
-type Props = {}
-
-const Auth = (props: Props) => {
+const Auth = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const [errorMessage, setErrorMessage] = useState('')
@@ -19,7 +17,6 @@ const Auth = (props: Props) => {
     const auth = getAuth()
 
     try {
-      console.log('login', formData.login)
       const userCredential = await signInWithEmailAndPassword(
         auth,
         formData.login,
@@ -29,7 +26,7 @@ const Auth = (props: Props) => {
 
       if (user) {
         const token = await user.getIdToken()
-        console.log(user)
+
         dispatch(
           setUser({
             email: user.email,
@@ -38,6 +35,7 @@ const Auth = (props: Props) => {
             password: formData.password,
           }),
         )
+
         localStorage.setItem(
           'user',
           JSON.stringify({

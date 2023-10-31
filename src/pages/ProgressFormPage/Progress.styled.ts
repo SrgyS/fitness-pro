@@ -17,6 +17,9 @@ export const ProgressPageContainer = styled.div`
   width: 100%;
   height: 100vh;
   position: fixed;
+  z-index: 3;
+  background-color: rgba(0, 0, 0, 0.4);
+  pointer-events: none;
   top: 0;
   left: 0;
   transition: 0.5s;
@@ -32,20 +35,22 @@ export const ProgressHeader = styled.h2`
   font-size: 32px;
   font-weight: 400;
   line-height: 40px;
+  margin: 0;
 `
 
 export const ProgressFormBox = styled.form`
   box-shadow: lightgray 0px 0px 3px 1px;
-  padding-top: 20px;
+  padding: 40px;
   padding-bottom: 20px;
   background-color: #ffffff;
   width: 444px;
-  height: 554px;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
+  gap: 30px;
   align-items: center;
+  overflow: auto;
 `
 export const ModalInput = styled.input`
   width: 100%;
@@ -61,8 +66,7 @@ export const ModalInput = styled.input`
   }
 `
 export const Inputs = styled.div`
-  margin-left: 40px;
-  margin-right: 40px;
+  width: 100%;
   padding: 5px;
   display: flex;
   flex-direction: column;

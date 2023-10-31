@@ -45,7 +45,6 @@ export const ExercisesList = styled.ol`
 export const Exercise = styled.li`
   list-style-type: disc;
 `
-////////////////////////////////////////////
 
 //Progression
 export const LessonProgress = styled.div`

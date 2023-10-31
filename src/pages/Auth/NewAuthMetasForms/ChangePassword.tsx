@@ -14,9 +14,7 @@ import { useState } from 'react'
 import { changePassword } from '../../../store/slices/userSlice'
 import { useAuth } from '../../../hooks/useAuth'
 
-type Props = {}
-
-const ChangePassword = (props: Props) => {
+const ChangePassword = () => {
   const [errorMessage, setErrorMessage] = useState('')
   const auth = getAuth()
   const dispatch = useDispatch()
@@ -33,12 +31,13 @@ const ChangePassword = (props: Props) => {
       }
       if (email) {
         try {
-          const credentials = EmailAuthProvider.credential(email, password)
+          if (password !== null) {
+            const credentials = EmailAuthProvider.credential(email, password)
 
-          await reauthenticateWithCredential(user, credentials)
+            await reauthenticateWithCredential(user, credentials)
 
-          await updatePassword(user, newPassword)
-
+            await updatePassword(user, newPassword)
+          }
           dispatch(
             changePassword({
               password: newPassword,

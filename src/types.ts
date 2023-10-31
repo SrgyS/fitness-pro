@@ -50,3 +50,10 @@ export interface IPractice {
   name: string
   amount: number
 }
+
+export interface IUser {
+  email: string | null
+  token: string | null
+  id: string | null
+  password: string | null
+}

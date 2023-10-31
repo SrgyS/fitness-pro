@@ -1,13 +1,5 @@
 import styled from 'styled-components'
 
-// const commonButtonStyles = css`
-//   border-radius: 46px;
-//   cursor: pointer;
-//   font-weight: 400;
-//   transition: background-color 0.3s ease;
-//   display: inline-block;
-// `
-
 export const ProgressPageContainer = styled.div`
   width: 100%;
   height: 100vh;
@@ -17,6 +9,7 @@ export const ProgressPageContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: fixed;
+  z-index: 3;
   top: 0;
   left: 0;
   transition: 0.5s;
@@ -48,7 +41,7 @@ export const ExercisesBox = styled.div`
   width: 302px;
   height: 452px;
   padding-left: 8px;
-  overflow-y: scroll;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   row-gap: 12px;

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const BidContainer = styled.section`
   background: #f9ebff;
@@ -9,7 +9,7 @@ export const BidContainer = styled.section`
   @media (max-width: 960px) {
     justify-content: center;
   }
-`;
+`
 
 export const SignUp = styled.div`
   font-size: 32px;
@@ -30,10 +30,19 @@ export const SignUp = styled.div`
   @media (max-width: 426px) {
     font-size: 25px;
   }
-`;
+`
 
 export const BidImg = styled.img`
   @media (max-width: 426px) {
     max-width: 80%;
   }
-`;
+`
+
+export const StyledSuccess = styled.div`
+  color: green;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  margin-top: 20px;
+  text-align: left;
+`
