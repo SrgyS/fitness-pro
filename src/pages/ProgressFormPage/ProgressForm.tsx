@@ -1,6 +1,7 @@
-import { useState } from 'react'
 import * as S from './Progress.styled'
+
 import { IPractice } from '../../types'
+import { useState } from 'react'
 
 type Props = {
   practice: IPractice[]

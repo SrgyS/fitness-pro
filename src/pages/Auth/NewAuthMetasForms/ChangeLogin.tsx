@@ -1,3 +1,5 @@
+import * as S from '../Auth.styles'
+
 import {
   EmailAuthProvider,
   getAuth,
@@ -5,15 +7,14 @@ import {
   updateEmail,
 } from 'firebase/auth'
 import { Form, formData } from '../../../components/Forms/formFields'
+
+import { IFormData } from '../../../types'
 import Logo from '../../../components/Logo/Logo'
 import { changeEmail } from '../../../store/slices/userSlice'
-import * as S from '../Auth.styles'
-import { useState } from 'react'
-import { IFormData } from '../../../types'
+import { useAuth } from '../../../hooks/useAuth'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../../../hooks/useAuth'
-import { getDatabase, ref, set } from 'firebase/database'
+import { useState } from 'react'
 
 const ChangeLogin = () => {
   const [errorMessage, setErrorMessage] = useState('')

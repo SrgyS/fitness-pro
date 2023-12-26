@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+
 import { ICourse } from '../types'
 
 export const coursesApi = createApi({
@@ -45,22 +46,6 @@ export async function getWorkout(id: string) {
   }
   const workout = await response.json()
   return workout
-}
-
-export async function updateProgress(
-  userId: string | null,
-  workoutId: string | null,
-  progress: { [key: number]: number },
-) {
-  const response = await fetch(
-    `https://fitness-pro-courses-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/workouts/${workoutId}.json`,
-    { method: 'PATCH', body: JSON.stringify(progress) },
-  )
-  if (!response.ok) {
-    throw new Error('Ошибка сервера')
-  }
-
-  return
 }
 
 export const { useGetCoursesQuery } = coursesApi

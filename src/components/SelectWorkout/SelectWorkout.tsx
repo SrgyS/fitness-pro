@@ -1,9 +1,8 @@
-import React from 'react'
 import * as S from './SelectWorkout.styles'
 
-type Props = {}
+import React from 'react'
 
-const SelectWorkout = (props: Props) => {
+const SelectWorkout = () => {
   return (
     <S.SelectWorkoutContainer>
       <S.SelectWorkoutTitle>Выберите тренировку</S.SelectWorkoutTitle>

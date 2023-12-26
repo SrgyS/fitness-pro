@@ -1,29 +1,39 @@
-import React, { useMemo, useState } from 'react'
 import * as S from './Lesson.style'
-import { Button } from '../../components/Button/Button.style'
-import Header from '../../components/Header/Header'
-import { StyledMain } from '../Main/Main.styles'
-import ExerciseProgress from '../../components/ProgressBar/ProgressBar'
-import { useAppDispatch, useAppSelector } from '../../store/hooks/useAppHook'
+
+import {
+  EmailAuthProvider,
+  getAuth,
+  reauthenticateWithCredential,
+} from 'firebase/auth'
+import React, { useMemo, useState } from 'react'
+import { get, getDatabase, ref, set } from 'firebase/database'
 import {
   selectorProgress,
   selectorSelectedWorkout,
   selectorWorkoutList,
 } from '../../store/selectors/courseSelector'
+import { useAppDispatch, useAppSelector } from '../../store/hooks/useAppHook'
 
+import { Button } from '../../components/Button/Button.style'
+import ExerciseProgress from '../../components/ProgressBar/ProgressBar'
+import Header from '../../components/Header/Header'
+import { StyledError } from '../../components/Forms/form.styled'
+import { StyledMain } from '../Main/Main.styles'
+import SuccessPopup from '../../components/SuccessPopup/SuccessPopup'
 import TrainProgress from '../ProgressFormPage/ProgressForm'
-import { updateProgress } from '../../api/coursesApi'
 import { selectorUserId } from '../../store/selectors/userSelector'
 import { setPracticeProgress } from '../../store/slices/courseSlice'
 import { useAuth } from '../../hooks/useAuth'
-import SuccessPopup from '../../components/SuccessPopup/SuccessPopup'
+import { useNavigate } from 'react-router-dom'
 
 const Lesson = () => {
   const dispatch = useAppDispatch()
+  const [errorMessage, setErrorMessage] = useState('')
 
-  const { user, email } = useAuth()
+  const { user, email, password } = useAuth()
 
   const progress = useAppSelector(selectorProgress)
+  const navigate = useNavigate()
   const selectedWorkout = useAppSelector(selectorSelectedWorkout)
 
   const [modalOpen, setModalOpen] = useState(false)
@@ -68,6 +78,68 @@ const Lesson = () => {
   }
 
   const userId = useAppSelector(selectorUserId)
+
+  const auth = getAuth()
+  const updateProgress = async (
+    userId: string | null,
+    workoutId: string,
+    progress: { [key: number]: number },
+  ) => {
+    const user = await auth.currentUser
+
+    if (!user) {
+      setErrorMessage('Авторизуйтесь для добавления прогресса')
+      setTimeout(() => {
+        navigate('/login')
+      }, 2000)
+
+      return
+    }
+
+    if (!workoutId) {
+      setErrorMessage('Тренировка не найдена')
+      setTimeout(() => {
+        navigate('/')
+      }, 2000)
+      return
+    }
+
+    if (!email) {
+      setErrorMessage('Отсутствует email')
+      setTimeout(() => {
+        navigate('/login')
+      }, 2000)
+      return
+    }
+    if (password !== null) {
+      const credentials = EmailAuthProvider.credential(email, password)
+
+      try {
+        await reauthenticateWithCredential(user, credentials)
+      } catch (reauthError) {
+        setErrorMessage('Ошибка авторизации')
+        setTimeout(() => {
+          navigate('/login')
+        }, 2000)
+      }
+    }
+    const db = getDatabase()
+
+    const userWorkoutsRef = ref(db, `users/${user.uid}/workouts`)
+
+    try {
+      const snapshot = await get(userWorkoutsRef)
+
+      const currentWorkouts = snapshot.val() || []
+
+      currentWorkouts[workoutId] = Object.values(progress)
+
+      await set(userWorkoutsRef, currentWorkouts)
+    } catch (error) {
+      console.error('Error updating progress:', error)
+      setErrorMessage('Произошла ошибка при обновлении прогресса')
+    }
+  }
 
   const handleUpdate = (changes: { [key: number]: number }) => {
     if (workout?.id.trim())
@@ -126,6 +198,7 @@ const Lesson = () => {
               >
                 Заполнить свой прогресс
               </Button>
+              {errorMessage && <StyledError>{errorMessage}</StyledError>}
             </S.LessonExercises>
             <S.LessonProgress>
               <S.LessonProgressWrapper>
